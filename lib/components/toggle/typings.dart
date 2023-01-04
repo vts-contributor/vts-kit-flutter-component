@@ -1,0 +1,1 @@
+enum VTSToggleType {MATERIAL, IOS}

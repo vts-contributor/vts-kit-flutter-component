@@ -1,0 +1,7 @@
+enum VTSButtonState {DEFAULT, DISABLE, ACTIVE, HOVER, FOCUS}
+
+enum VTSButtonType {PRIMARY, SECONDARY, LINK, TEXT}
+
+enum VTSButtonSize {LG, MD, SM}
+
+enum VTSButtonShape {STANDARD, PILL, CIRCLE}

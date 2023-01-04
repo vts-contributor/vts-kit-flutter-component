@@ -1,0 +1,1 @@
+enum VTSToastType {STANDARD, ROUNDED, FULL_WIDTH}

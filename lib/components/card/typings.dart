@@ -1,0 +1,1 @@
+enum VTSCardType {BASIC, AVATAR, FULL_IMAGE}

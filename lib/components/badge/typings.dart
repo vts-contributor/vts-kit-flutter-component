@@ -1,0 +1,7 @@
+enum VTSBadgeType {SOLID, OUTLINE}
+
+enum VTSBadgeShape {PILL, STANDARD, SQUARE, CIRCLE}
+
+enum VTSBadgeSize {SM, MD}
+
+enum VTSBadgePosition {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT}

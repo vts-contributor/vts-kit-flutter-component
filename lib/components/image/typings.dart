@@ -1,0 +1,1 @@
+enum VTSImageShape {STANDARD, CIRCLE, SQUARE}
