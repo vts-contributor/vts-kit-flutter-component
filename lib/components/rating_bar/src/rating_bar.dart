@@ -3,8 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 /// Defines widgets which are to used as rating bar items.
-class RatingWidget {
-  RatingWidget({
+class VTSRatingWidget {
+  VTSRatingWidget({
     required this.full,
     required this.half,
     required this.empty,
@@ -22,17 +22,17 @@ class RatingWidget {
 
 /// A widget to receive rating input from users.
 ///
-/// [RatingBar] can also be used to display rating
+/// [VTSRatingBar] can also be used to display rating
 ///
-/// Prefer using [RatingBarIndicator] instead, if read only version is required.
+/// Prefer using [VTSRatingBarIndicator] instead, if read only version is required.
 /// As RatingBarIndicator supports any fractional rating value.
-class RatingBar extends StatefulWidget {
-  /// Creates [RatingBar] using the [ratingWidget].
-  const RatingBar({
+class VTSRatingBar extends StatefulWidget {
+  /// Creates [VTSRatingBar] using the [ratingWidget].
+  const VTSRatingBar({
     Key? key,
 
     /// Customizes the Rating Bar item with [RatingWidget].
-    required RatingWidget ratingWidget,
+    required VTSRatingWidget ratingWidget,
     required this.onRatingUpdate,
     this.glowColor,
     this.maxRating,
@@ -57,8 +57,8 @@ class RatingBar extends StatefulWidget {
         _ratingWidget = ratingWidget,
         super(key: key);
 
-  /// Creates [RatingBar] using the [itemBuilder].
-  const RatingBar.builder({
+  /// Creates [VTSRatingBar] using the [itemBuilder].
+  const VTSRatingBar.builder({
     /// {@template flutterRatingBar.itemBuilder}
     /// Widget for each rating bar item.
     /// {@endtemplate}
@@ -109,7 +109,8 @@ class RatingBar extends StatefulWidget {
   final TextDirection? textDirection;
 
   /// {@template flutterRatingBar.unratedColor}
-  /// Defines color for the unrated portion.
+  /// Defines color for the unrated portion. Often be used in
+  /// [VTSRatingBar.builder].
   ///
   /// Default is [ThemeData.disabledColor].
   /// {@endtemplate}
@@ -186,7 +187,7 @@ class RatingBar extends StatefulWidget {
   /// Default is false.
   final bool updateOnDrag;
 
-  /// How the item within the [RatingBar] should be placed in the main axis.
+  /// How the item within the [VTSRatingBar] should be placed in the main axis.
   ///
   /// For example, if [wrapAlignment] is [WrapAlignment.center], the item in
   /// the RatingBar are grouped together in the center of their run in the main axis.
@@ -195,13 +196,13 @@ class RatingBar extends StatefulWidget {
   final WrapAlignment wrapAlignment;
 
   final IndexedWidgetBuilder? _itemBuilder;
-  final RatingWidget? _ratingWidget;
+  final VTSRatingWidget? _ratingWidget;
 
   @override
-  State<RatingBar> createState() => _RatingBarState();
+  State<VTSRatingBar> createState() => _VTSRatingBarState();
 }
 
-class _RatingBarState extends State<RatingBar> {
+class _VTSRatingBarState extends State<VTSRatingBar> {
   double _rating = 0;
   bool _isRTL = false;
   double iconRating = 0;
@@ -219,7 +220,7 @@ class _RatingBarState extends State<RatingBar> {
   }
 
   @override
-  void didUpdateWidget(RatingBar oldWidget) {
+  void didUpdateWidget(VTSRatingBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialRating != widget.initialRating) {
       _rating = widget.initialRating;
@@ -304,28 +305,36 @@ class _RatingBarState extends State<RatingBar> {
     return IgnorePointer(
       ignoring: widget.ignoreGestures,
       child: GestureDetector(
-        onTapDown: widget.disabled ? null : (details) {
-          double value;
-          if (index == 0 && (_rating == 1 || _rating == 0.5)) {
-            value = 0;
-          } else {
-            final tappedPosition = details.localPosition.dx;
-            final tappedOnFirstHalf = tappedPosition <= widget.itemSize / 2;
-            value = index +
-                (tappedOnFirstHalf && widget.allowHalfRating ? 0.5 : 1.0);
-          }
+        onTapDown: widget.disabled
+            ? null
+            : (details) {
+                double value;
+                if (index == 0 && (_rating == 1 || _rating == 0.5)) {
+                  value = 0;
+                } else {
+                  final tappedPosition = details.localPosition.dx;
+                  final tappedOnFirstHalf =
+                      tappedPosition <= widget.itemSize / 2;
+                  value = index +
+                      (tappedOnFirstHalf && widget.allowHalfRating ? 0.5 : 1.0);
+                }
 
-          value = math.max(value, widget.minRating);
-          widget.onRatingUpdate(value);
-          _rating = value;
-          setState(() {});
-        },
-        onHorizontalDragStart: _isHorizontal && !widget.disabled ? _onDragStart : null,
-        onHorizontalDragEnd: _isHorizontal && !widget.disabled ? _onDragEnd : null,
-        onHorizontalDragUpdate: _isHorizontal && !widget.disabled ? _onDragUpdate : null,
-        onVerticalDragStart: _isHorizontal || widget.disabled ? null : _onDragStart,
+                value = math.max(value, widget.minRating);
+                widget.onRatingUpdate(value);
+                _rating = value;
+                setState(() {});
+              },
+        onHorizontalDragStart:
+            _isHorizontal && !widget.disabled ? _onDragStart : null,
+        onHorizontalDragEnd:
+            _isHorizontal && !widget.disabled ? _onDragEnd : null,
+        onHorizontalDragUpdate:
+            _isHorizontal && !widget.disabled ? _onDragUpdate : null,
+        onVerticalDragStart:
+            _isHorizontal || widget.disabled ? null : _onDragStart,
         onVerticalDragEnd: _isHorizontal || widget.disabled ? null : _onDragEnd,
-        onVerticalDragUpdate: _isHorizontal || widget.disabled ? null : _onDragUpdate,
+        onVerticalDragUpdate:
+            _isHorizontal || widget.disabled ? null : _onDragUpdate,
         child: Padding(
           padding: widget.itemPadding,
           child: ValueListenableBuilder<bool>(
@@ -420,31 +429,29 @@ class _HalfRatingWidget extends StatelessWidget {
   final Color unratedColor;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: enableMask
-          ? Stack(
-              fit: StackFit.expand,
-              children: [
-                _NoRatingWidget(
-                  size: size,
-                  unratedColor: unratedColor,
-                  enableMask: enableMask,
-                  child: child,
-                ),
-                ClipRect(
-                  clipper: _HalfClipper(
-                    rtlMode: rtlMode,
+  Widget build(BuildContext context) => SizedBox(
+        height: size,
+        width: size,
+        child: enableMask
+            ? Stack(
+                fit: StackFit.expand,
+                children: [
+                  _NoRatingWidget(
+                    size: size,
+                    unratedColor: unratedColor,
+                    enableMask: enableMask,
+                    child: child,
                   ),
-                  child: child,
-                ),
-              ],
-            )
-          : child,
-    );
-  }
+                  ClipRect(
+                    clipper: _HalfClipper(
+                      rtlMode: rtlMode,
+                    ),
+                    child: child,
+                  ),
+                ],
+              )
+            : child,
+      );
 }
 
 class _HalfClipper extends CustomClipper<Rect> {
@@ -485,19 +492,17 @@ class _NoRatingWidget extends StatelessWidget {
   final Color unratedColor;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: enableMask
-          ? ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                unratedColor,
-                BlendMode.srcIn,
-              ),
-              child: child,
-            )
-          : child,
-    );
-  }
+  Widget build(BuildContext context) => SizedBox(
+        height: size,
+        width: size,
+        child: enableMask
+            ? ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  unratedColor,
+                  BlendMode.srcIn,
+                ),
+                child: child,
+              )
+            : child,
+      );
 }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 /// A widget to display rating as assigned using [rating] property.
 ///
-/// This is a read only version of [RatingBar].
+/// This is a read only version of [VTSRatingBar].
 ///
-/// Use [RatingBar], if interactive version is required.
+/// Use [VTSRatingBar], if interactive version is required.
 /// i.e. if user input is required.
-class RatingBarIndicator extends StatefulWidget {
-  const RatingBarIndicator({
+class VTSRatingBarIndicator extends StatefulWidget {
+  const VTSRatingBarIndicator({
     Key? key,
     required this.itemBuilder,
     this.textDirection,
@@ -52,10 +52,10 @@ class RatingBarIndicator extends StatefulWidget {
   final double rating;
 
   @override
-  State<RatingBarIndicator> createState() => _RatingBarIndicatorState();
+  State<VTSRatingBarIndicator> createState() => _VTSRatingBarIndicatorState();
 }
 
-class _RatingBarIndicatorState extends State<RatingBarIndicator> {
+class _VTSRatingBarIndicatorState extends State<VTSRatingBarIndicator> {
   double _ratingFraction = 0;
   int _ratingNumber = 0;
   bool _isRTL = false;
@@ -90,71 +90,68 @@ class _RatingBarIndicatorState extends State<RatingBarIndicator> {
     );
   }
 
-  List<Widget> get _children {
-    return List.generate(
-      widget.itemCount,
-      (index) {
-        if (widget.textDirection != null) {
-          if (widget.textDirection == TextDirection.rtl &&
-              Directionality.of(context) != TextDirection.rtl) {
-            return Transform(
-              transform: Matrix4.identity()..scale(-1.0, 1, 1),
-              alignment: Alignment.center,
-              transformHitTests: false,
-              child: _buildItems(index),
-            );
+  List<Widget> get _children => List.generate(
+        widget.itemCount,
+        (index) {
+          if (widget.textDirection != null) {
+            if (widget.textDirection == TextDirection.rtl &&
+                Directionality.of(context) != TextDirection.rtl) {
+              return Transform(
+                transform: Matrix4.identity()..scale(-1.0, 1, 1),
+                alignment: Alignment.center,
+                transformHitTests: false,
+                child: _buildItems(index),
+              );
+            }
           }
-        }
-        return _buildItems(index);
-      },
-    );
-  }
+          return _buildItems(index);
+        },
+      );
 
-  Widget _buildItems(int index) {
-    return Padding(
-      padding: widget.itemPadding,
-      child: SizedBox(
-        width: widget.itemSize,
-        height: widget.itemSize,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            FittedBox(
-              child: index + 1 < _ratingNumber
-                  ? widget.itemBuilder(context, index)
-                  : ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        widget.unratedColor ?? Theme.of(context).disabledColor,
-                        BlendMode.srcIn,
+  Widget _buildItems(int index) => Padding(
+        padding: widget.itemPadding,
+        child: SizedBox(
+          width: widget.itemSize,
+          height: widget.itemSize,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              FittedBox(
+                child: index + 1 < _ratingNumber
+                    ? widget.itemBuilder(context, index)
+                    : ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          widget.unratedColor ??
+                              Theme.of(context).disabledColor,
+                          BlendMode.srcIn,
+                        ),
+                        child: widget.itemBuilder(context, index),
+                      ),
+              ),
+              if (index + 1 == _ratingNumber)
+                if (_isRTL)
+                  FittedBox(
+                    child: ClipRect(
+                      clipper: _IndicatorClipper(
+                        ratingFraction: _ratingFraction,
+                        rtlMode: _isRTL,
                       ),
                       child: widget.itemBuilder(context, index),
                     ),
-            ),
-            if (index + 1 == _ratingNumber)
-              if (_isRTL)
-                FittedBox(
-                  child: ClipRect(
-                    clipper: _IndicatorClipper(
-                      ratingFraction: _ratingFraction,
-                      rtlMode: _isRTL,
+                  )
+                else
+                  FittedBox(
+                    child: ClipRect(
+                      clipper: _IndicatorClipper(
+                        ratingFraction: _ratingFraction,
+                      ),
+                      child: widget.itemBuilder(context, index),
                     ),
-                    child: widget.itemBuilder(context, index),
                   ),
-                )
-              else
-                FittedBox(
-                  child: ClipRect(
-                    clipper: _IndicatorClipper(
-                      ratingFraction: _ratingFraction,
-                    ),
-                    child: widget.itemBuilder(context, index),
-                  ),
-                ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _IndicatorClipper extends CustomClipper<Rect> {
@@ -167,25 +164,22 @@ class _IndicatorClipper extends CustomClipper<Rect> {
   final bool rtlMode;
 
   @override
-  Rect getClip(Size size) {
-    return rtlMode
-        ? Rect.fromLTRB(
-            size.width - size.width * ratingFraction,
-            0,
-            size.width,
-            size.height,
-          )
-        : Rect.fromLTRB(
-            0,
-            0,
-            size.width * ratingFraction,
-            size.height,
-          );
-  }
+  Rect getClip(Size size) => rtlMode
+      ? Rect.fromLTRB(
+          size.width - size.width * ratingFraction,
+          0,
+          size.width,
+          size.height,
+        )
+      : Rect.fromLTRB(
+          0,
+          0,
+          size.width * ratingFraction,
+          size.height,
+        );
 
   @override
-  bool shouldReclip(_IndicatorClipper oldClipper) {
-    return ratingFraction != oldClipper.ratingFraction ||
-        rtlMode != oldClipper.rtlMode;
-  }
+  bool shouldReclip(_IndicatorClipper oldClipper) =>
+      ratingFraction != oldClipper.ratingFraction ||
+      rtlMode != oldClipper.rtlMode;
 }
