@@ -47,6 +47,7 @@ export 'package:vts_component/components/dropdown/index.dart';
 export 'package:vts_component/components/image/index.dart';
 export 'package:vts_component/components/rating_bar/index.dart';
 export 'package:vts_component/components/search_bar/index.dart';
+export 'package:vts_component/components/shimmer/shimmer.dart';
 export 'package:vts_component/components/tabs/index.dart';
 export 'package:vts_component/components/tile/index.dart';
 export 'package:vts_component/components/toast/index.dart';
