@@ -37,6 +37,7 @@ library vts_component;
 // export 'types/vt_typography_type.dart';
 
 export 'package:vts_component/components/accordion/index.dart';
+export 'package:vts_component/components/alert/index.dart';
 export 'package:vts_component/components/avatar/index.dart';
 export 'package:vts_component/components/badge/index.dart';
 export 'package:vts_component/components/base/field_control/typings.dart';
