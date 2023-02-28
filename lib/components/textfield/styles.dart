@@ -6,11 +6,11 @@ import 'package:vts_component/common/style/vts_color.dart';
 import 'package:vts_component/common/style/vts_common.dart';
 import 'package:vts_component/vts_component.dart';
 
-class VTSCardStyle {
-  static const VTS_CARD_PREFIX = "CARD";
+class VTSTextField {
+  static const VTS_TEXTFIELD_PREFIX = "CARD";
 
   Map<dynamic, dynamic> metaContent = {
-    VTSCardStyle.VTS_CARD_PREFIX: {
+    VTSTextField.VTS_TEXTFIELD_PREFIX: {
       'default': {
         'titleTextStyle': VTSCommon.TEXT_STYLE_SUBTITLE_1_20,
         'subtitleTextStyle': VTSCommon.TEXT_STYLE_BODY_1_16
@@ -60,34 +60,46 @@ class VTSCardStyle {
   // ignore: type_annotate_public_apis
   static dynamic get(String key, {selector, List<Object> extra = const []}) =>
       selector != null
-          ? retriveItem(
-                  [VTSCardStyle.VTS_CARD_PREFIX, key, selector, ...extra]) ??
-              retriveItem([VTSCardStyle.VTS_CARD_PREFIX, key, selector]) ??
-              retriveItem(
-                  [VTSCardStyle.VTS_CARD_PREFIX, 'default', key, ...extra]) ??
-              retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key])
-          : retriveItem(
-                  [VTSCardStyle.VTS_CARD_PREFIX, 'default', key, ...extra]) ??
-              retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key]);
+          ? retriveItem([
+                VTSTextField.VTS_TEXTFIELD_PREFIX,
+                key,
+                selector,
+                ...extra
+              ]) ??
+              retriveItem([VTSTextField.VTS_TEXTFIELD_PREFIX, key, selector]) ??
+              retriveItem([
+                VTSTextField.VTS_TEXTFIELD_PREFIX,
+                'default',
+                key,
+                ...extra
+              ]) ??
+              retriveItem([VTSTextField.VTS_TEXTFIELD_PREFIX, 'default', key])
+          : retriveItem([
+                VTSTextField.VTS_TEXTFIELD_PREFIX,
+                'default',
+                key,
+                ...extra
+              ]) ??
+              retriveItem([VTSTextField.VTS_TEXTFIELD_PREFIX, 'default', key]);
 
   static dynamic retriveItem(List<Object> buildKeys) {
     final key = buildKeys.map((e) => e.toString()).join('_');
-    if (VTSCardStyle.Content.containsKey(key)) {
-      return VTSCardStyle.Content[key];
+    if (VTSTextField.Content.containsKey(key)) {
+      return VTSTextField.Content[key];
     } else {
       return null;
     }
   }
 
-  static Map<dynamic, dynamic> Content = VTSCardStyle.internal()._content;
+  static Map<dynamic, dynamic> Content = VTSTextField.internal()._content;
   Map<dynamic, dynamic> _content = {};
 
-  factory VTSCardStyle.internal() {
-    final instance = VTSCardStyle();
+  factory VTSTextField.internal() {
+    final instance = VTSTextField();
     final Map<dynamic, dynamic> result = {};
     instance._content = Generator.fromMap(instance.metaContent, result);
     return instance;
   }
 
-  VTSCardStyle();
+  VTSTextField();
 }
