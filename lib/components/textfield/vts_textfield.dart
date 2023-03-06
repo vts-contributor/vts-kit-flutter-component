@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vts_component/components/base/field_control/typings.dart';
+import 'package:vts_component/components/textfield/index.dart';
+import 'package:vts_component/components/textfield/styles.dart';
 
 class VTSTextField extends StatefulWidget {
   const VTSTextField(
@@ -59,11 +60,10 @@ class VTSTextField extends StatefulWidget {
       this.enableIMEPersonalizedLearning = true,
       this.mouseCursor,
       this.hintText,
-      this.hintColor,
       this.borderColor = const Color(0xFF8F9294),
       this.errorColor = const Color(0xFFEE0033),
       this.contentPadding,
-      this.inputLabel,
+      this.inputLabel = 'Input Label',
       this.labelStyle,
       this.hasLabelText = true,
       this.enable = true})
@@ -123,12 +123,10 @@ class VTSTextField extends StatefulWidget {
   final MouseCursor? mouseCursor;
 
   final String? hintText;
-
-  final Color? hintColor;
   final Color? borderColor;
   final Color? errorColor;
   final EdgeInsetsGeometry? contentPadding;
-  final String? inputLabel;
+  final String inputLabel;
   final TextStyle? labelStyle;
   final bool hasLabelText;
   final bool enable;
@@ -142,14 +140,10 @@ class _VTSTextFieldState extends State<VTSTextField> {
   String? errorMessage = '';
   bool onError = false;
 
-  late VTSFieldControlStateStyle<Color> backgrounds;
-  late VTSFieldControlStateStyle<TextStyle> textStyles;
-  late VTSFieldControlStateStyle<Color> borderColors;
   @override
   void initState() {
     super.initState();
     currentColor = widget.borderColor;
-    backgrounds = VTSFieldControlStateStyle();
   }
 
   @override
@@ -158,14 +152,18 @@ class _VTSTextFieldState extends State<VTSTextField> {
         children: [
           widget.hasLabelText
               ? Text(
-                  widget.inputLabel ?? 'Input Label',
+                  widget.inputLabel,
                   style: widget.labelStyle ??
                       TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: widget.enable
-                              ? Color(0xFF000000)
-                              : Color(0xFF8F9294)),
+                        fontSize: VTSTextFieldStyle.get('fontSize'),
+                        fontWeight: VTSTextFieldStyle.get('fontWeight'),
+                        fontFamily: VTSTextFieldStyle.get('fontFamily'),
+                        color: widget.enable
+                            ? VTSTextFieldStyle.get('labelTextColor',
+                                selector: VTSTextFieldState.DEFAULT)
+                            : VTSTextFieldStyle.get('labelTextColor',
+                                selector: VTSTextFieldState.DISABLE),
+                      ),
                 )
               : const SizedBox(),
           const SizedBox(
@@ -179,52 +177,47 @@ class _VTSTextFieldState extends State<VTSTextField> {
               focusNode: widget.focusNode,
               decoration: widget.decoration ??
                   InputDecoration(
-                    hintStyle: TextStyle(
-                      color: widget.hintColor ?? Color(0xFF8F9294),
-                      fontWeight: FontWeight.w300,
-                    ),
                     filled: true,
                     fillColor: widget.enable
-                        ? const Color(0xFFFFFFFF)
-                        : const Color(0xFFE9E9E9),
+                        ? VTSTextFieldStyle.get('background',
+                            selector: VTSTextFieldState.DEFAULT)
+                        : VTSTextFieldStyle.get('background',
+                            selector: VTSTextFieldState.DISABLE),
                     contentPadding: widget.contentPadding ??
-                        const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 16.0),
+                        VTSTextFieldStyle.get('contentPadding'),
                     // errorText: "Error Message",
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                      borderSide:
-                          BorderSide(color: Color(0xFF8F9294), width: 1.0),
-                    ),
-                    disabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                      borderSide:
-                          BorderSide(color: Colors.transparent, width: 1.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(6.0)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: VTSTextFieldStyle.get('borderRadius'),
                       borderSide: BorderSide(
                         color: onError
-                            ? const Color(0xFFEE0033)
-                            : const Color(0xFF44494D),
-                        width: 1.0,
+                            ? VTSTextFieldStyle.get('borderColor',
+                                selector: VTSTextFieldState.ERROR)
+                            : VTSTextFieldStyle.get('borderColor',
+                                selector: VTSTextFieldState.DEFAULT),
                       ),
                     ),
-                    focusedErrorBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                      borderSide:
-                          BorderSide(color: Color(0xFFEE0033), width: 1.0),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: VTSTextFieldStyle.get('borderRadius'),
+                      borderSide: BorderSide(
+                          color: VTSTextFieldStyle.get('borderColor',
+                              selector: VTSTextFieldState.DISABLE)),
                     ),
-                    errorStyle: const TextStyle(fontSize: 16),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: VTSTextFieldStyle.get('borderRadius'),
+                      borderSide: BorderSide(
+                        color: VTSTextFieldStyle.get('borderColor',
+                            selector: VTSTextFieldState.DEFAULT),
+                      ),
+                    ),
+                    errorStyle:
+                        TextStyle(fontSize: VTSTextFieldStyle.get('fontSize')),
                     hintText: widget.hintText,
                   ),
               keyboardType: widget.keyboardType ?? TextInputType.text,
               textCapitalization: widget.textCapitalization,
               textInputAction: widget.textInputAction,
               style: widget.style ??
-                  const TextStyle(
-                      decoration: TextDecoration.none, fontSize: 16),
+                  TextStyle(fontSize: VTSTextFieldStyle.get('fontSize')),
               strutStyle: widget.strutStyle,
               textDirection: widget.textDirection,
               textAlign: widget.textAlign,
@@ -290,9 +283,11 @@ class _VTSTextFieldState extends State<VTSTextField> {
             height: 4.0,
           ),
           onError
-              ? const Text(
+              ? Text(
                   'Error Message',
-                  style: TextStyle(color: Color(0xFFEE0033), fontSize: 16.0),
+                  style: TextStyle(
+                      color: VTSTextFieldStyle.get('errorMessageColor'),
+                      fontSize: VTSTextFieldStyle.get('fontSize')),
                 )
               : const SizedBox()
         ],
