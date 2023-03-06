@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:vts_component/common/style/generator.dart';
+import 'package:vts_component/common/style/vts_common.dart';
+import 'package:vts_component/components/base/field_control/typings.dart';
 import 'package:vts_component/vts_component.dart';
 
 class VTSSearchBarStyle {

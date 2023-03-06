@@ -11,38 +11,38 @@ import 'package:vts_component/components/button/styles.dart';
 import 'package:vts_component/vts_component.dart';
 
 class VTSButton extends StatefulWidget {
-  const VTSButton({
-    Key? key,
-    required this.onPressed,
-    this.onHighlightChanged,
-    this.elevation = 0.0,
-    this.focusElevation = 4.0,
-    this.hoverElevation = 4.0,
-    this.highlightElevation = 1.0,
-    this.disabledElevation = 0.0,
-    this.clipBehavior = Clip.none,
-    this.focusNode,
-    this.autofocus = false,
-    this.child,
-    this.vtsType = VTSButtonType.PRIMARY,
-    this.vtsShape = VTSButtonShape.STANDARD,
-    this.vtsSize = VTSButtonSize.MD,
-    this.text,
-    this.icon,
-    this.blockButton,
-    this.onLongPress,
-    this.enabled = true,
-    this.textStyle,
-    this.background,
-    this.fontColor,
-    this.highlightColor,
-    this.splashColor,
-    this.border,
-    this.boxDecoration,
-    this.boxConstraints,
-    this.width,
-    this.height
-  })  : assert(focusElevation >= 0.0),
+  const VTSButton(
+      {Key? key,
+      required this.onPressed,
+      this.onHighlightChanged,
+      this.elevation = 0.0,
+      this.focusElevation = 4.0,
+      this.hoverElevation = 4.0,
+      this.highlightElevation = 1.0,
+      this.disabledElevation = 0.0,
+      this.clipBehavior = Clip.none,
+      this.focusNode,
+      this.autofocus = false,
+      this.child,
+      this.vtsType = VTSButtonType.PRIMARY,
+      this.vtsShape = VTSButtonShape.STANDARD,
+      this.vtsSize = VTSButtonSize.MD,
+      this.text,
+      this.icon,
+      this.blockButton,
+      this.onLongPress,
+      this.enabled = true,
+      this.textStyle,
+      this.background,
+      this.fontColor,
+      this.highlightColor,
+      this.splashColor,
+      this.border,
+      this.boxDecoration,
+      this.boxConstraints,
+      this.width,
+      this.height})
+      : assert(focusElevation >= 0.0),
         assert(hoverElevation >= 0.0),
         assert(highlightElevation >= 0.0),
         assert(disabledElevation >= 0.0),
@@ -102,7 +102,7 @@ class VTSButton extends StatefulWidget {
   /// Properties to Override preset
   /// {@macro flutter.widgets.Clip}
   final Clip clipBehavior;
-  
+
   /// on true state blockButton gives block size button
   final bool? blockButton;
 
@@ -117,7 +117,7 @@ class VTSButton extends StatefulWidget {
 
   /// Override [highlightColor] preset
   final Color? highlightColor;
-  
+
   /// Override [splashColor] preset
   final Color? splashColor;
 
@@ -126,13 +126,13 @@ class VTSButton extends StatefulWidget {
 
   /// Override [boxDecoration] preset
   final Decoration? boxDecoration;
-  
+
   /// Override [boxConstraints] preset
   final BoxConstraints? boxConstraints;
-  
+
   /// Override [width] preset
   final double? width;
-  
+
   /// Override [height] preset
   final double? height;
 
@@ -157,12 +157,14 @@ class _VTSButtonState extends State<VTSButton> {
     onPressed = widget.onPressed;
     focusNode = widget.focusNode ?? new FocusNode();
     iconOnly = icon != null && widget.text == null && widget.child == null;
-    vtsSize = 
-      (widget.vtsType == VTSButtonType.LINK || widget.vtsType == VTSButtonType.TEXT)
-        ? iconOnly ? widget.vtsSize : VTSButtonSize.SM 
-        : widget.vtsSize == VTSButtonSize.LG && !iconOnly 
-          ? VTSButtonSize.MD 
-          : widget.vtsSize;
+    vtsSize = (widget.vtsType == VTSButtonType.LINK ||
+            widget.vtsType == VTSButtonType.TEXT)
+        ? iconOnly
+            ? widget.vtsSize
+            : VTSButtonSize.SM
+        : widget.vtsSize == VTSButtonSize.LG && !iconOnly
+            ? VTSButtonSize.MD
+            : widget.vtsSize;
     _updateState(
       VTSButtonState.DISABLE,
       !widget.enabled,
@@ -243,12 +245,14 @@ class _VTSButtonState extends State<VTSButton> {
     onPressed = widget.onPressed;
     focusNode = widget.focusNode ?? new FocusNode();
     iconOnly = icon != null && widget.text == null && widget.child == null;
-    vtsSize = 
-      (widget.vtsType == VTSButtonType.LINK || widget.vtsType == VTSButtonType.TEXT)
-        ? iconOnly ? widget.vtsSize : VTSButtonSize.SM 
-        : widget.vtsSize == VTSButtonSize.LG && !iconOnly 
-          ? VTSButtonSize.MD 
-          : widget.vtsSize;
+    vtsSize = (widget.vtsType == VTSButtonType.LINK ||
+            widget.vtsType == VTSButtonType.TEXT)
+        ? iconOnly
+            ? widget.vtsSize
+            : VTSButtonSize.SM
+        : widget.vtsSize == VTSButtonSize.LG && !iconOnly
+            ? VTSButtonSize.MD
+            : widget.vtsSize;
     super.didUpdateWidget(oldWidget);
   }
 
@@ -270,112 +274,113 @@ class _VTSButtonState extends State<VTSButton> {
     return widget.elevation;
   }
 
-  dynamic getStyle(
-    String key, 
-    List<Object> extra
-  ) => VTSButtonStyle.get(key, iconOnly, extra: extra);
+  dynamic getStyle(String key, List<Object> extra) =>
+      VTSButtonStyle.get(key, iconOnly, extra: extra);
 
-  dynamic getStyleAppendHasIcon(
-    String key, 
-    List<Object> extra
-  ) => VTSButtonStyle.getAppendHasIcon(key, iconOnly, widget.icon != null, extra: extra);
+  dynamic getStyleAppendHasIcon(String key, List<Object> extra) =>
+      VTSButtonStyle.getAppendHasIcon(key, iconOnly, widget.icon != null,
+          extra: extra);
 
-  Color get borderColor => widget.background != null ? VTSColors.TRANSPARENT : getStyle('color', [widget.vtsType, _highPriorityState, 'borderColor']);
-  Color get background => widget.background ?? getStyle('color', [widget.vtsType, _highPriorityState, 'background']);
-  Color get fontColor => widget.fontColor ?? getStyle('color', [widget.vtsType, _highPriorityState, 'fontColor']);
-  TextDecoration? get textDecoration => getStyle('textDecoration', [widget.vtsType, _highPriorityState]);
+  Color get borderColor => widget.background != null
+      ? VTSColors.TRANSPARENT
+      : getStyle('color', [widget.vtsType, _highPriorityState, 'borderColor']);
+  Color get background =>
+      widget.background ??
+      getStyle('color', [widget.vtsType, _highPriorityState, 'background']);
+  Color get fontColor =>
+      widget.fontColor ??
+      getStyle('color', [widget.vtsType, _highPriorityState, 'fontColor']);
+  TextDecoration? get textDecoration =>
+      getStyle('textDecoration', [widget.vtsType, _highPriorityState]);
   Color get highlightColor => background;
-  TextStyle get textStyle => widget.textStyle ?? TextStyle(
-    color: fontColor,
-    fontSize: getStyle('fontSize', [vtsSize]),
-    fontWeight: getStyle('fontWeight', [widget.vtsType]),
-    decoration: textDecoration,
-    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY
-  );
+  TextStyle get textStyle =>
+      widget.textStyle ??
+      TextStyle(
+          color: fontColor,
+          fontSize: getStyle('fontSize', [vtsSize]),
+          fontWeight: getStyle('fontWeight', [widget.vtsType]),
+          decoration: textDecoration,
+          fontFamily: VTSCommon.DEFAULT_FONT_FAMILY);
   double get height => getStyle('height', [vtsSize]);
-  double? get width => iconOnly ? height : widget.blockButton == true ? MediaQuery.of(context).size.width : null;
-  BoxConstraints? get boxConstraints => getStyleAppendHasIcon('boxConstrains', []);
-  EdgeInsetsGeometry? get padding => getStyle('padding', [widget.vtsShape]) ?? getStyleAppendHasIcon('padding', [vtsSize]);
+  double? get width => iconOnly
+      ? height
+      : widget.blockButton == true
+          ? MediaQuery.of(context).size.width
+          : null;
+  BoxConstraints? get boxConstraints =>
+      getStyleAppendHasIcon('boxConstrains', []);
+  EdgeInsetsGeometry? get padding =>
+      getStyle('padding', [widget.vtsShape]) ??
+      getStyleAppendHasIcon('padding', [vtsSize]);
   Color get iconFontColor => fontColor;
   double get iconFontSize {
     if (!iconOnly)
       return getStyle('iconFontSize', [vtsSize]);
     else
-      return widget.vtsType != VTSButtonType.TEXT ? getStyle('iconFontSize', [vtsSize]) : height;
+      return widget.vtsType != VTSButtonType.TEXT
+          ? getStyle('iconFontSize', [vtsSize])
+          : height;
   }
+
   BorderRadius get borderRadius => getStyle('borderRadius', [widget.vtsShape]);
   ShapeBorder getBorder() {
     final outlineBorder = RoundedRectangleBorder(
-      borderRadius: borderRadius,
-      side: BorderSide(color: borderColor, width: 1)
-    );
+        borderRadius: borderRadius,
+        side: BorderSide(color: borderColor, width: 1));
 
     if (_focused) {
       final extraBorder = RoundedRectangleBorder(
-        borderRadius: borderRadius,
-        side: const BorderSide(color: VTSColors.WHITE_1, width: 1)
-      );
+          borderRadius: borderRadius,
+          side: const BorderSide(color: VTSColors.WHITE_1, width: 1));
       return extraBorder + outlineBorder;
     }
     return outlineBorder;
   }
-  BoxDecoration? get boxDecoration => 
-    _hovered && !_disabled 
-      ? BoxDecoration( 
-          boxShadow: const [VTSCommon.BLUR3_X0_Y1],
-          borderRadius: borderRadius
-        ) 
-      : null;
 
+  BoxDecoration? get boxDecoration => _hovered && !_disabled
+      ? BoxDecoration(
+          boxShadow: const [VTSCommon.BLUR3_X0_Y1], borderRadius: borderRadius)
+      : null;
 
   Widget? renderBody() {
     if (iconOnly) {
       return icon;
     }
-    return icon != null 
-      && child != null 
-    ? Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        icon!,
-        const SizedBox(width: 8),
-        child!
-      ],
-    )
-    : child;
+    return icon != null && child != null
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[icon!, const SizedBox(width: 8), child!],
+          )
+        : child;
   }
 
   @override
   Widget build(BuildContext context) {
     Widget result;
-    if (widget.vtsType == VTSButtonType.LINK || widget.vtsType == VTSButtonType.TEXT) {
+    if (widget.vtsType == VTSButtonType.LINK ||
+        widget.vtsType == VTSButtonType.TEXT) {
       result = Container(
-        child: Material(
-          textStyle: textStyle,
-          clipBehavior: widget.clipBehavior,
-          color: VTSColors.TRANSPARENT,
-          child: InkWell(
-            onHover: _handleHoveredChanged,
-            onTap: _handleOnTap,
-            onLongPress: widget.onLongPress,
-            onHighlightChanged: _handleHighlightChanged,
-            hoverColor: VTSColors.TRANSPARENT,
-            focusColor: VTSColors.TRANSPARENT,
-            highlightColor: VTSColors.TRANSPARENT,
-            splashColor: VTSColors.TRANSPARENT,
-            child: IconTheme.merge(
-              data: IconThemeData(color: iconFontColor, size: iconFontSize),
-              child: Container(
-                child: Center(
-                  widthFactor: 1,
-                  heightFactor: 1,
-                  child: renderBody()
+          child: Material(
+              textStyle: textStyle,
+              clipBehavior: widget.clipBehavior,
+              color: VTSColors.TRANSPARENT,
+              child: InkWell(
+                onHover: _handleHoveredChanged,
+                onTap: _handleOnTap,
+                onLongPress: widget.onLongPress,
+                onHighlightChanged: _handleHighlightChanged,
+                hoverColor: VTSColors.TRANSPARENT,
+                focusColor: VTSColors.TRANSPARENT,
+                highlightColor: VTSColors.TRANSPARENT,
+                splashColor: VTSColors.TRANSPARENT,
+                child: IconTheme.merge(
+                  data: IconThemeData(color: iconFontColor, size: iconFontSize),
+                  child: Container(
+                    child: Center(
+                        widthFactor: 1, heightFactor: 1, child: renderBody()),
+                  ),
                 ),
-              ),
-            ),
-          )
-        )
-      );
+              )));
     } else {
       result = Container(
         constraints: widget.boxConstraints ?? boxConstraints,
@@ -388,10 +393,16 @@ class _VTSButtonState extends State<VTSButton> {
           type: MaterialType.button,
           clipBehavior: widget.clipBehavior,
           child: InkWell(
-            hoverColor: widget.background != null ? null : VTSColors.TRANSPARENT,
-            focusColor: widget.background != null ? null : VTSColors.TRANSPARENT,
-            splashColor: _disabled ? VTSColors.TRANSPARENT : widget.splashColor ?? VTSCommon.SPLASH_COLOR,
-            highlightColor: widget.background != null ? (widget.highlightColor != null ? widget.highlightColor : null) : highlightColor,
+            hoverColor:
+                widget.background != null ? null : VTSColors.TRANSPARENT,
+            focusColor:
+                widget.background != null ? null : VTSColors.TRANSPARENT,
+            splashColor: _disabled
+                ? VTSColors.TRANSPARENT
+                : widget.splashColor ?? VTSCommon.SPLASH_COLOR,
+            highlightColor: widget.background != null
+                ? (widget.highlightColor != null ? widget.highlightColor : null)
+                : highlightColor,
             canRequestFocus: widget.enabled,
             onHighlightChanged: _handleHighlightChanged,
             onHover: _handleHoveredChanged,
@@ -405,10 +416,7 @@ class _VTSButtonState extends State<VTSButton> {
                 width: widget.width ?? width,
                 padding: padding,
                 child: Center(
-                  widthFactor: 1,
-                  heightFactor: 1,
-                  child: renderBody()
-                ),
+                    widthFactor: 1, heightFactor: 1, child: renderBody()),
               ),
             ),
           ),

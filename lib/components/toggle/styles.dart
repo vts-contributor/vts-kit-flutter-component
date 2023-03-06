@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:vts_component/common/style/generator.dart';
+import 'package:vts_component/common/style/vts_color.dart';
+import 'package:vts_component/components/toggle/index.dart';
 import 'package:vts_component/vts_component.dart';
 
 class VTSToggleStyle {

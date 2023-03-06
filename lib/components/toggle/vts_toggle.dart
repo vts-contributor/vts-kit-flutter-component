@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:vts_component/components/toggle/index.dart';
 import 'package:vts_component/components/toggle/styles.dart';
 import 'package:vts_component/vts_component.dart';
 
