@@ -2,8 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:vts_component/common/style/generator.dart';
-import 'package:vts_component/common/style/vts_common.dart';
-import 'package:vts_component/components/base/field_control/typings.dart';
 import 'package:vts_component/vts_component.dart';
 
 class VTSSearchBarStyle {
@@ -11,9 +9,7 @@ class VTSSearchBarStyle {
 
   Map<dynamic, dynamic> metaContent = {
     VTS_SEARCH_BAR_PREFIX: {
-      "default": {
-        "borderRadius": VTSCommon.BORDER_RADIUS_STANDARD
-      },
+      "default": {"borderRadius": VTSCommon.BORDER_RADIUS_STANDARD},
       "background": {
         VTSFieldControlState.DEFAULT: const Color(0xFFF2F2F2),
         VTSFieldControlState.HOVER: VTSColors.WHITE_1,
@@ -38,20 +34,30 @@ class VTSSearchBarStyle {
   };
 
   // ignore: type_annotate_public_apis
-  static dynamic get(String key, { selector, List<Object> extra = const [] }) 
-    => selector != null 
-      ? retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, key, selector, ...extra])
-      ?? retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, key, selector])
-      : retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, 'default', key, ...extra])
-      ?? retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, 'default', key]);
-
+  static dynamic get(String key, {selector, List<Object> extra = const []}) =>
+      selector != null
+          ? retriveItem([
+                VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX,
+                key,
+                selector,
+                ...extra
+              ]) ??
+              retriveItem(
+                  [VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, key, selector])
+          : retriveItem([
+                VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX,
+                'default',
+                key,
+                ...extra
+              ]) ??
+              retriveItem(
+                  [VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, 'default', key]);
 
   static dynamic retriveItem(List<Object> buildKeys) {
     final key = buildKeys.map((e) => e.toString()).join('_');
     if (VTSSearchBarStyle.Content.containsKey(key)) {
       return VTSSearchBarStyle.Content[key];
-    }
-    else {
+    } else {
       return null;
     }
   }
