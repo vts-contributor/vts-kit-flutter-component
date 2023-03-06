@@ -3,60 +3,79 @@
 import 'package:flutter/material.dart';
 import 'package:vts_component/common/style/generator.dart';
 import 'package:vts_component/common/style/vts_color.dart';
-import 'package:vts_component/common/style/vts_common.dart';
-import 'package:vts_component/components/toast/index.dart';
+import 'package:vts_component/components/toggle/index.dart';
 import 'package:vts_component/vts_component.dart';
 
-class VTSToastStyle {
-  static const VTS_TOAST_PREFIX = "TOAST";
+class VTSToggleStyle {
+  static const VTS_TOGGLE_PREFIX = "TOGGLE";
 
   Map<dynamic, dynamic> metaContent = {
-    VTS_TOAST_PREFIX: {
+    VTS_TOGGLE_PREFIX: {
       "default": {
-        "toastWidthRatio": 0.9,
-        "padding": const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-        "background": VTSColors.BLACK_1,
+        "activeThumbColor": VTSColors.WHITE_1,
+        "inactiveThumbColor": VTSColors.WHITE_1,
+        "activeTrackColor": VTSColors.ILUS_GRAY_2,
+        "inactiveTrackColor": VTSColors.ILUS_GRAY_2,
+      },
+      VTSToggleType.IOS: {
+        "borderRadius": BorderRadius.circular(15.5),
+        "thumbBorderRadius": BorderRadius.circular(100),
+        "trackHeight": 28.0,
+        "trackWidth": 53.0,
         "boxShadow": null,
-        "textStyle": VTSCommon.TEXT_STYLE_BODY_1_16,
-        "fontColor": VTSColors.WHITE_1,
-        "cancelFontColor": VTSColors.PRIMARY_0
+        "thumbPadding": 2.0,
+        "disabledTrackColor": VTSColors.GRAY_5,
+        "disabledThumbColor": VTSColors.WHITE_1,
       },
-      "borderRadius": {
-        VTSToastType.STANDARD: BorderRadius.circular(6.0),
-        VTSToastType.ROUNDED: VTSCommon.BORDER_RADIUS_PILL,
-        VTSToastType.FULL_WIDTH: VTSCommon.BORDER_RADIUS_SQUARE
+      VTSToggleType.MATERIAL: {
+        "borderRadius": BorderRadius.circular(34.0),
+        "thumbBorderRadius": BorderRadius.circular(100),
+        "trackHeight": 14.0,
+        "trackWidth": 34.0,
+        "boxShadow": const [BoxShadow(blurRadius: 2.0, offset: Offset(0.0, 1.0), color: Color.fromRGBO(48, 79, 254, 0.54))],
+        "thumbPadding": -3.0,
+        "disabledTrackColor": VTSColors.GRAY_4.withOpacity(0.24),
+        "disabledThumbColor": VTSColors.WHITE_1,
       },
+      // VTSToggleType.SQUARE: {
+      //   "borderRadius": BorderRadius.circular(34.0),
+      //   "thumbBorderRadius": BorderRadius.circular(0),
+      //   "trackHeight": 14.0,
+      //   "trackWidth": 34.0,
+      //   "boxShadow": const [BoxShadow(spreadRadius: 2.0, offset: Offset(0.0, 1.0), color: Color.fromRGBO(48, 79, 254, 0.54))],
+      //   "thumbPadding": -3.0,
+      // },
     }
   };
 
   // ignore: type_annotate_public_apis
-  static dynamic get(String key, { selector, List<Object> extra = const [] }) 
-    => selector != null 
-      ? retriveItem([VTSToastStyle.VTS_TOAST_PREFIX, key, selector, ...extra])
-      ?? retriveItem([VTSToastStyle.VTS_TOAST_PREFIX, key, selector])
-      : retriveItem([VTSToastStyle.VTS_TOAST_PREFIX, 'default', key, ...extra])
-      ?? retriveItem([VTSToastStyle.VTS_TOAST_PREFIX, 'default', key]);
+  static dynamic get(String key, { selector, List<Object> extra = const [] })
+  => selector != null
+      ? retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, selector, key, ...extra])
+      ?? retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, selector, key])
+      : retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, 'default', key, ...extra])
+      ?? retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, 'default', key]);
 
 
   static dynamic retriveItem(List<Object> buildKeys) {
     final key = buildKeys.map((e) => e.toString()).join('_');
-    if (VTSToastStyle.Content.containsKey(key)) {
-      return VTSToastStyle.Content[key];
+    if (VTSToggleStyle.Content.containsKey(key)) {
+      return VTSToggleStyle.Content[key];
     }
     else {
       return null;
     }
   }
 
-  static Map<dynamic, dynamic> Content = VTSToastStyle.internal()._content;
+  static Map<dynamic, dynamic> Content = VTSToggleStyle.internal()._content;
   Map<dynamic, dynamic> _content = {};
 
-  factory VTSToastStyle.internal() {
-    final instance = VTSToastStyle();
+  factory VTSToggleStyle.internal() {
+    final instance = VTSToggleStyle();
     final Map<dynamic, dynamic> result = {};
     instance._content = Generator.fromMap(instance.metaContent, result);
     return instance;
   }
 
-  VTSToastStyle();
+  VTSToggleStyle();
 }
