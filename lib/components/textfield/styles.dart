@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:vts_component/common/style/generator.dart';
-import 'package:vts_component/components/textfield/typing.dart';
 import 'package:vts_component/vts_component.dart';
 
 class VTSTextFieldStyle {
