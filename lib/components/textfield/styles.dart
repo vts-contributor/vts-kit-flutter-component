@@ -36,26 +36,26 @@ class VTSTextFieldStyle {
   static dynamic get(String key, {selector, List<Object> extra = const []}) =>
       selector != null
           ? retriveItem([
-                VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX,
-                'default',
-                key,
-                selector,
-                ...extra
-              ]) ??
-              retriveItem([
-                VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX,
-                'default',
-                key,
-                selector
-              ])
+        VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX,
+        'default',
+        key,
+        selector,
+        ...extra
+      ]) ??
+          retriveItem([
+            VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX,
+            'default',
+            key,
+            selector
+          ])
           : retriveItem([
-                VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX,
-                'default',
-                key,
-                ...extra
-              ]) ??
-              retriveItem(
-                  [VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX, 'default', key]);
+        VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX,
+        'default',
+        key,
+        ...extra
+      ]) ??
+          retriveItem(
+              [VTSTextFieldStyle.VTS_TEXTFIELD_PREFIX, 'default', key]);
 
   static dynamic retriveItem(List<Object> buildKeys) {
     key = buildKeys.map((e) => e.toString()).join('_');
