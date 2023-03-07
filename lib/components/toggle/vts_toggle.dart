@@ -8,18 +8,18 @@ import 'package:vts_component/vts_component.dart';
 class VTSToggle extends StatefulWidget {
   const VTSToggle(
       {Key? key,
-      required this.onChanged,
-      required this.value,
-      this.activeThumbColor,
-      this.activeTrackColor,
-      this.inactiveTrackColor,
-      this.inactiveThumbColor,
-      this.disabledTrackColor,
-      this.disabledThumbColor,
-      this.vtsType = VTSToggleType.IOS,
-      this.animationDuration = const Duration(milliseconds: 100),
-      this.enabled = true
-    }) : super(key: key);
+        required this.onChanged,
+        required this.value,
+        this.activeThumbColor,
+        this.activeTrackColor,
+        this.inactiveTrackColor,
+        this.inactiveThumbColor,
+        this.disabledTrackColor,
+        this.disabledThumbColor,
+        this.vtsType = VTSToggleType.IOS,
+        this.animationDuration = const Duration(milliseconds: 100),
+        this.enabled = true
+      }) : super(key: key);
 
   /// Thumb's color on active
   final Color? activeThumbColor;
@@ -79,14 +79,14 @@ class _VTSToggleState extends State<VTSToggle> with TickerProviderStateMixin {
     isOn = widget.value;
     controller = AnimationController(duration: widget.animationDuration, vsync: this);
     offset = (isOn
-            ? Tween<Offset>(
-                begin: Offset(offsetRatio, 0),
-                end: Offset.zero,
-              )
-            : Tween<Offset>(
-                begin: Offset.zero,
-                end: Offset(offsetRatio, 0),
-              ))
+        ? Tween<Offset>(
+      begin: Offset(offsetRatio, 0),
+      end: Offset.zero,
+    )
+        : Tween<Offset>(
+      begin: Offset.zero,
+      end: Offset(offsetRatio, 0),
+    ))
         .animate(controller);
     super.initState();
   }
@@ -97,14 +97,14 @@ class _VTSToggleState extends State<VTSToggle> with TickerProviderStateMixin {
     controller = AnimationController(duration: widget.animationDuration, vsync: this);
     offset = (isOn
         ? Tween<Offset>(
-            begin: Offset(offsetRatio, 0),
-            end: Offset.zero,
-          )
+      begin: Offset(offsetRatio, 0),
+      end: Offset.zero,
+    )
         : Tween<Offset>(
-            begin: Offset.zero,
-            end: Offset(offsetRatio, 0),
-          ))
-    .animate(controller);
+      begin: Offset.zero,
+      end: Offset(offsetRatio, 0),
+    ))
+        .animate(controller);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -138,7 +138,7 @@ class _VTSToggleState extends State<VTSToggle> with TickerProviderStateMixin {
     thumbPadding = VTSToggleStyle.get('thumbPadding', selector: widget.vtsType);
     thumbSize = trackHeight - thumbPadding * 2;
     containerHeight = max(trackHeight, thumbSize);
-    
+
 
     if (widget.vtsType == VTSToggleType.IOS) {
       containerWidth = max(trackWidth, trackWidth - thumbPadding * 2);
@@ -153,61 +153,61 @@ class _VTSToggleState extends State<VTSToggle> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) => Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Container(
-            height: containerHeight,
-            width: containerWidth,
-          ),
-          Positioned(
-            child: InkWell(
-              focusColor: VTSColors.TRANSPARENT,
-              highlightColor: VTSColors.TRANSPARENT,
-              splashColor: VTSColors.TRANSPARENT,
-              hoverColor: VTSColors.TRANSPARENT,
-              onTap: widget.enabled ? onStatusChange : null,
-              child: Container(
-                height: trackHeight,
-                width: trackWidth,
-                decoration: BoxDecoration(
-                  color: 
-                    !widget.enabled 
+    alignment: Alignment.center,
+    children: <Widget>[
+      Container(
+        height: containerHeight,
+        width: containerWidth,
+      ),
+      Positioned(
+        child: InkWell(
+            focusColor: VTSColors.TRANSPARENT,
+            highlightColor: VTSColors.TRANSPARENT,
+            splashColor: VTSColors.TRANSPARENT,
+            hoverColor: VTSColors.TRANSPARENT,
+            onTap: widget.enabled ? onStatusChange : null,
+            child: Container(
+              height: trackHeight,
+              width: trackWidth,
+              decoration: BoxDecoration(
+                color:
+                !widget.enabled
                     ? widget.disabledTrackColor ?? VTSToggleStyle.get('disabledTrackColor', selector: widget.vtsType)
                     : isOn
-                      ? widget.activeTrackColor ?? VTSToggleStyle.get('activeTrackColor')
-                      : widget.inactiveTrackColor ?? VTSToggleStyle.get('inactiveTrackColor'),
-                  borderRadius: VTSToggleStyle.get('borderRadius', selector: widget.vtsType),
-                ),
-              )
-            ),
-          ),
-          Positioned(
-            left: (containerWidth - trackWidth) / 2 + thumbPadding,            
-            child: InkWell(
-              focusColor: VTSColors.TRANSPARENT,
-              highlightColor: VTSColors.TRANSPARENT,
-              splashColor: VTSColors.TRANSPARENT,
-              hoverColor: VTSColors.TRANSPARENT,
-              onTap: widget.enabled ? onStatusChange : null,
-              child: SlideTransition(
-                position: offset,
-                child: Container(
-                  height: thumbSize,
-                  width: thumbSize,
-                  decoration: BoxDecoration(
-                    borderRadius: VTSToggleStyle.get('thumbBorderRadius', selector: widget.vtsType),
-                    color: 
-                      !widget.enabled 
-                      ? widget.disabledThumbColor ?? VTSToggleStyle.get('disabledThumbColor', selector: widget.vtsType)
-                      : isOn
-                        ? widget.activeThumbColor ?? VTSToggleStyle.get('activeThumbColor')
-                        : widget.inactiveThumbColor ?? VTSToggleStyle.get('inactiveThumbColor'),
-                    boxShadow: VTSToggleStyle.get('boxShadow', selector: widget.vtsType),
-                  ),
-                ),
+                    ? widget.activeTrackColor ?? VTSToggleStyle.get('activeTrackColor')
+                    : widget.inactiveTrackColor ?? VTSToggleStyle.get('inactiveTrackColor'),
+                borderRadius: VTSToggleStyle.get('borderRadius', selector: widget.vtsType),
+              ),
+            )
+        ),
+      ),
+      Positioned(
+        left: (containerWidth - trackWidth) / 2 + thumbPadding,
+        child: InkWell(
+          focusColor: VTSColors.TRANSPARENT,
+          highlightColor: VTSColors.TRANSPARENT,
+          splashColor: VTSColors.TRANSPARENT,
+          hoverColor: VTSColors.TRANSPARENT,
+          onTap: widget.enabled ? onStatusChange : null,
+          child: SlideTransition(
+            position: offset,
+            child: Container(
+              height: thumbSize,
+              width: thumbSize,
+              decoration: BoxDecoration(
+                borderRadius: VTSToggleStyle.get('thumbBorderRadius', selector: widget.vtsType),
+                color:
+                !widget.enabled
+                    ? widget.disabledThumbColor ?? VTSToggleStyle.get('disabledThumbColor', selector: widget.vtsType)
+                    : isOn
+                    ? widget.activeThumbColor ?? VTSToggleStyle.get('activeThumbColor')
+                    : widget.inactiveThumbColor ?? VTSToggleStyle.get('inactiveThumbColor'),
+                boxShadow: VTSToggleStyle.get('boxShadow', selector: widget.vtsType),
               ),
             ),
           ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 }
