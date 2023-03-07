@@ -213,7 +213,12 @@ class _VTSTextFieldState extends State<VTSTextField> {
           textCapitalization: widget.textCapitalization,
           textInputAction: widget.textInputAction,
           style: widget.style ??
-              TextStyle(fontSize: VTSTextFieldStyle.get('fontSize')),
+              TextStyle(
+                fontSize: VTSTextFieldStyle.get('fontSize'),
+                color: widget.enabled
+                    ? VTSColors.BLACK_1
+                    : VTSColors.GRAY_3,
+              ),
           strutStyle: widget.strutStyle,
           textDirection: widget.textDirection,
           textAlign: widget.textAlign,
