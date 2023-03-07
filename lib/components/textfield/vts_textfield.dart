@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:vts_component/components/textfield/index.dart';
 import 'package:vts_component/components/textfield/styles.dart';
@@ -249,14 +250,15 @@ class _VTSTextFieldState extends State<VTSTextField> {
               onSaved: widget.onSaved,
               validator: widget.validator ??
                   (value) {
-                    setState(() {
+                    SchedulerBinding.instance.addPostFrameCallback((_){setState(() {
                       if (value == null || value.trim().isEmpty) {
                         onError = true;
                       } else {
                         onError = false;
                       }
                       return;
-                    });
+                    });});
+
                   },
               inputFormatters: widget.inputFormatters,
               enabled: widget.enabled,
