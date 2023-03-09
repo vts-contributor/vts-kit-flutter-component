@@ -5,6 +5,7 @@ class VTSAlert extends StatefulWidget {
   /// Alert has to be wrap inside the body like [GFFloatingWidget]. See [GFFloatingWidget]
   const VTSAlert({
     Key? key,
+    this.showButton = true,
     this.title,
     this.titleTextStyle = const TextStyle(
       color: Colors.black87,
@@ -43,6 +44,9 @@ class VTSAlert extends StatefulWidget {
     this.onTapCancel,
     this.onTapOk,
   }) : super(key: key);
+
+  /// Show button or not, default is true
+  final bool showButton;
 
   /// title of type [String] used to describe the title of the [VTSAlert]
   final String? title;
@@ -233,32 +237,34 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                                 style: widget.subtitleTextStyle,
                               ),
                       ),
-                      Align(
-                        alignment:
-                            widget.bottomBarAlignment ?? Alignment.bottomRight,
-                        child: widget.bottomBar ??
-                            Container(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    child: Text(
-                                      widget.cancelButtonText ?? 'CANCEL',
-                                      style: widget.cancelButtonTextStyle,
+                      widget.showButton
+                          ? Align(
+                              alignment: widget.bottomBarAlignment ??
+                                  Alignment.bottomRight,
+                              child: widget.bottomBar ??
+                                  Container(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          child: Text(
+                                            widget.cancelButtonText ?? 'CANCEL',
+                                            style: widget.cancelButtonTextStyle,
+                                          ),
+                                          onPressed: widget.onTapCancel,
+                                        ),
+                                        TextButton(
+                                            child: Text(
+                                              widget.okButtonText ?? 'OK',
+                                              style: widget.okButtonTextStyle,
+                                            ),
+                                            onPressed: widget.onTapOk),
+                                      ],
                                     ),
-                                    onPressed: widget.onTapCancel,
                                   ),
-                                  TextButton(
-                                      child: Text(
-                                        widget.okButtonText ?? 'OK',
-                                        style: widget.okButtonTextStyle,
-                                      ),
-                                      onPressed: widget.onTapOk),
-                                ],
-                              ),
-                            ),
-                      ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),
