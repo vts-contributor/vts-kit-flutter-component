@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:vts_component/components/alert/typing.dart';
 
 class VTSAlert extends StatefulWidget {
-  /// Alert has to be wrap inside the body like [GFFloatingWidget]. See [GFFloatingWidget]
   const VTSAlert({
     Key? key,
-    this.showButton = true,
-    this.title,
+    required this.title,
+    this.icon,
+    this.closeCustomIconButton,
     this.titleTextStyle = const TextStyle(
       color: Colors.black87,
       fontSize: 20,
@@ -26,33 +26,26 @@ class VTSAlert extends StatefulWidget {
     this.bottomBarAlignment,
     this.backgroundColor,
     this.width,
-    this.type = VTSAlertType.ROUNDED,
+    this.widgetType = VTSAlertWidgetType.ROUNDED,
+    this.alertType,
     this.alignment,
     this.padding,
     this.shadow,
+    this.border,
     this.borderRadius,
-    this.okButtonText,
-    this.cancelButtonText,
-    this.okButtonTextStyle = const TextStyle(
-      fontSize: 18,
-      color: Colors.lightBlue,
-    ),
-    this.cancelButtonTextStyle = const TextStyle(
-      fontSize: 18,
-      color: Colors.lightBlue,
-    ),
-    this.onTapCancel,
-    this.onTapOk,
   }) : super(key: key);
 
-  /// Show button or not, default is true
-  final bool showButton;
+  /// head icon
+  final Icon? icon;
+
+  // custom IconButton widget
+  final IconButton? closeCustomIconButton;
 
   /// title of type [String] used to describe the title of the [VTSAlert]
-  final String? title;
+  final String title;
 
   ///type of [TextStyle] to change the style of the title
-  final TextStyle titleTextStyle;
+  final TextStyle? titleTextStyle;
 
   /// type of [Alignment] used to align the title text inside the [VTSAlert]
   final Alignment? titleAlignment;
@@ -61,7 +54,7 @@ class VTSAlert extends StatefulWidget {
   final String? subtitle;
 
   ///type of [TextStyle] to change the style of the subtitle
-  final TextStyle subtitleTextStyle;
+  final TextStyle? subtitleTextStyle;
 
   /// type of [Alignment] used to align the subtitle text inside the [VTSAlert]
   final Alignment? subtitleAlignment;
@@ -87,35 +80,22 @@ class VTSAlert extends StatefulWidget {
   /// type of [double] to give circular radius to [VTSAlert]
   final double? borderRadius;
 
-  ///pass color of type [Color] or [GFColors] for background of [VTSAlert]
+  /// type of [BoxBorder]
+  final BoxBorder? border;
+
+  ///pass color of type [Color] or [ ] for background of [VTSAlert]
   final Color? backgroundColor;
 
   /// width of type [double] used to control the width of the [VTSAlert]
   final double? width;
 
-  ///type of [VTSAlertType] which takes the type ie, basic, rounded and fullWidth for the [VTSAlert]
-  final VTSAlertType type;
+  ///type of [VTSAlertWidgetType] which takes the type ie, basic, rounded and fullWidth for the [VTSAlert]
+  final VTSAlertWidgetType widgetType;
+
+  final VTSAlertType? alertType;
 
   /// type of [Alignment] used to align the [VTSAlert]
   final Alignment? alignment;
-
-  /// type of [String] used to replace the text of cancel button in [VTSAlert]
-  final String? cancelButtonText;
-
-  ///type of [TextStyle] to change the style of the cancel button text
-  final TextStyle cancelButtonTextStyle;
-
-  ///type of [TextStyle] to change the style of the ok button text
-  final TextStyle okButtonTextStyle;
-
-  /// type of [String] used to replace the text of ok button in [VTSAlert]
-  final String? okButtonText;
-
-  /// type of [Function] used for tap on ok button in [VTSAlert]
-  final void Function()? onTapOk;
-
-  /// type of [Function] used for tap on cancel button in [VTSAlert]
-  final void Function()? onTapCancel;
 
   @override
   _VTSAlertState createState() => _VTSAlertState();
@@ -153,13 +133,13 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
             Align(
               alignment: widget.alignment ?? Alignment.center,
               child: Container(
-                width: widget.type == VTSAlertType.FULLWIDTH
+                width: widget.widgetType == VTSAlertWidgetType.FULLWIDTH
                     ? MediaQuery.of(context).size.width
                     : widget.width ?? MediaQuery.of(context).size.width * 0.885,
                 constraints: const BoxConstraints(
                   minHeight: 50,
                 ),
-                margin: widget.type == VTSAlertType.FULLWIDTH
+                margin: widget.widgetType == VTSAlertWidgetType.FULLWIDTH
                     ? const EdgeInsets.only(
                         left: 0,
                         right: 0,
@@ -178,93 +158,96 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                       bottom: 10,
                     ),
                 decoration: BoxDecoration(
-                  borderRadius: widget.type == VTSAlertType.BASIC
+                  border: _getBorder(widget.alertType, widget.border),
+                  borderRadius: widget.widgetType == VTSAlertWidgetType.BASIC
                       ? BorderRadius.circular(3)
-                      : widget.type == VTSAlertType.ROUNDED
+                      : widget.widgetType == VTSAlertWidgetType.ROUNDED
                           ? BorderRadius.circular(
                               widget.borderRadius ?? 10,
                             )
                           : BorderRadius.zero,
-                  color: widget.backgroundColor ?? Colors.white, // fix this
+                  color: _getBackgroundColor(
+                      widget.alertType, widget.backgroundColor),
                   boxShadow: widget.shadow ??
                       [
                         BoxShadow(
-                          color: Colors.black87.withOpacity(0.1),
-                          offset: const Offset(0, 1),
-                          blurRadius: 10,
-                          spreadRadius: 2,
+                          color: Colors.white.withOpacity(0),
+                          offset: const Offset(0, 0),
+                          blurRadius: 0,
+                          spreadRadius: 0,
                         )
                       ],
                 ),
                 child: ClipRRect(
-                  borderRadius: widget.type == VTSAlertType.ROUNDED
+                  borderRadius: widget.widgetType == VTSAlertWidgetType.ROUNDED
                       ? BorderRadius.circular(
                           widget.borderRadius ?? 10,
                         )
                       : BorderRadius.zero,
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Align(
-                        alignment: widget.topBarAlignment ?? Alignment.center,
-                        child: widget.topBar ?? Container(),
-                      ),
-                      Align(
-                        alignment: widget.titleAlignment ?? Alignment.topLeft,
-                        child: widget.title != null
-                            ? Text(
-                                widget.title!,
-                                style: widget.titleTextStyle,
-                              )
-                            : Text(
-                                'Alert !!!!',
-                                style: widget.titleTextStyle,
-                              ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Align(
-                        alignment:
-                            widget.subtitleAlignment ?? Alignment.topLeft,
-                        child: widget.subtitle != null
-                            ? Text(
-                                widget.subtitle!,
-                                style: widget.subtitleTextStyle,
-                              )
-                            : Text(
-                                'This is subtitle.',
-                                style: widget.subtitleTextStyle,
-                              ),
-                      ),
-                      widget.showButton
-                          ? Align(
-                              alignment: widget.bottomBarAlignment ??
-                                  Alignment.bottomRight,
-                              child: widget.bottomBar ??
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        TextButton(
-                                          child: Text(
-                                            widget.cancelButtonText ?? 'CANCEL',
-                                            style: widget.cancelButtonTextStyle,
-                                          ),
-                                          onPressed: widget.onTapCancel,
-                                        ),
-                                        TextButton(
-                                            child: Text(
-                                              widget.okButtonText ?? 'OK',
-                                              style: widget.okButtonTextStyle,
-                                            ),
-                                            onPressed: widget.onTapOk),
-                                      ],
-                                    ),
-                                  ),
+                    children: [
+                      _getIcon(widget.alertType, widget.icon),
+                      widget.icon != null || widget.alertType != null
+                          ? const SizedBox(
+                              width: 10,
                             )
                           : Container(),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Align(
+                              alignment:
+                                  widget.topBarAlignment ?? Alignment.center,
+                              child: widget.topBar ?? Container(),
+                            ),
+                            Align(
+                              alignment:
+                                  widget.titleAlignment ?? Alignment.topLeft,
+                              child: Text(
+                                widget.title,
+                                style: _getTitleTextStyle(
+                                    widget.alertType, widget.titleTextStyle),
+                              ),
+                            ),
+                            widget.subtitle != null
+                                ? const SizedBox(
+                                    height: 10,
+                                  )
+                                : Container(),
+                            widget.subtitle != null
+                                ? Align(
+                                    alignment: widget.subtitleAlignment ??
+                                        Alignment.topLeft,
+                                    child: Text(
+                                      widget.subtitle!,
+                                      style: _getSubtitleTextStyle(
+                                          widget.alertType,
+                                          widget.subtitleTextStyle),
+                                    ),
+                                  )
+                                : Container(),
+                            widget.subtitle != null
+                                ? const SizedBox(
+                                    height: 10,
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            widget.closeCustomIconButton ?? Container(),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -273,4 +256,213 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
           ],
         ),
       );
+  Widget _getIcon(VTSAlertType? alertType, Icon? icon) {
+    switch (alertType) {
+      case VTSAlertType.ERROR_FILL:
+        return const Icon(
+          Icons.highlight_off,
+          size: 30,
+          color: Color.fromRGBO(203, 0, 43, 1),
+        );
+      case VTSAlertType.ERROR_OUTLINE:
+        return const Icon(
+          Icons.highlight_off,
+          size: 30,
+          color: Color.fromRGBO(203, 0, 43, 1),
+        );
+      case VTSAlertType.INFO_FILL:
+        return const Icon(
+          Icons.info_outline,
+          size: 30,
+          color: Color.fromRGBO(42, 177, 235, 1),
+        );
+      case VTSAlertType.INFO_OUTLINE:
+        return const Icon(
+          Icons.info_outline,
+          size: 30,
+          color: Color.fromRGBO(42, 177, 235, 1),
+        );
+      case VTSAlertType.SUCCESS_FILL:
+        return const Icon(
+          Icons.check_circle_outline_outlined,
+          size: 30,
+          color: Color.fromRGBO(0, 171, 118, 1),
+        );
+      case VTSAlertType.SUCCESS_OUTLINE:
+        return const Icon(
+          Icons.check_circle_outline_outlined,
+          size: 30,
+          color: Color.fromRGBO(0, 171, 118, 1),
+        );
+      case VTSAlertType.WARNING_FILL:
+        return const Icon(
+          Icons.warning_amber_outlined,
+          size: 30,
+          color: Color.fromRGBO(219, 168, 22, 1),
+        );
+      case VTSAlertType.WARNING_OUTLINE:
+        return const Icon(
+          Icons.warning_amber_outlined,
+          size: 30,
+          color: Color.fromRGBO(219, 168, 22, 1),
+        );
+      default:
+        return icon ??
+            const SizedBox(
+              width: 20,
+            );
+    }
+  }
+
+  Color _getBackgroundColor(VTSAlertType? alertType, Color? backgroundColor) {
+    switch (alertType) {
+      case VTSAlertType.ERROR_FILL:
+        return const Color.fromRGBO(255, 245, 246, 1);
+      case VTSAlertType.ERROR_OUTLINE:
+        return const Color.fromRGBO(255, 245, 246, 1);
+      case VTSAlertType.INFO_FILL:
+        return const Color.fromRGBO(232, 248, 255, 1);
+      case VTSAlertType.INFO_OUTLINE:
+        return const Color.fromRGBO(232, 248, 255, 1);
+      case VTSAlertType.SUCCESS_FILL:
+        return const Color.fromRGBO(229, 252, 242, 1);
+      case VTSAlertType.SUCCESS_OUTLINE:
+        return const Color.fromRGBO(229, 252, 242, 1);
+      case VTSAlertType.WARNING_FILL:
+        return const Color.fromRGBO(251, 246, 231, 1);
+      case VTSAlertType.WARNING_OUTLINE:
+        return const Color.fromRGBO(251, 246, 231, 1);
+      default:
+        return backgroundColor ?? Colors.white;
+    }
+  }
+
+  TextStyle _getTitleTextStyle(
+      VTSAlertType? alertType, TextStyle? titleTextStyle) {
+    switch (alertType) {
+      case VTSAlertType.ERROR_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(203, 0, 43, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.ERROR_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(203, 0, 43, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.INFO_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(42, 177, 235, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.INFO_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(42, 177, 235, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.SUCCESS_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(0, 171, 118, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.SUCCESS_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(0, 171, 118, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.WARNING_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(219, 168, 22, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      case VTSAlertType.WARNING_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(219, 168, 22, 1),
+            fontSize: 20,
+            fontWeight: FontWeight.w700);
+      default:
+        return titleTextStyle ??
+            const TextStyle(
+              color: Colors.black87,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            );
+    }
+  }
+
+  TextStyle _getSubtitleTextStyle(
+      VTSAlertType? alertType, TextStyle? subtitleTextStyle) {
+    switch (alertType) {
+      case VTSAlertType.ERROR_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(203, 0, 43, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.ERROR_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(203, 0, 43, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.INFO_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(42, 177, 235, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.INFO_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(42, 177, 235, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.SUCCESS_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(42, 177, 235, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.SUCCESS_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(0, 171, 118, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.WARNING_FILL:
+        return const TextStyle(
+            color: Color.fromRGBO(219, 168, 22, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      case VTSAlertType.WARNING_OUTLINE:
+        return const TextStyle(
+            color: Color.fromRGBO(219, 168, 22, 1),
+            fontSize: 17,
+            fontWeight: FontWeight.w400);
+      default:
+        return subtitleTextStyle ??
+            const TextStyle(
+              color: Colors.black87,
+              fontSize: 17,
+              fontWeight: FontWeight.w400,
+            );
+    }
+  }
+
+  BoxBorder _getBorder(VTSAlertType? alertType, BoxBorder? border) {
+    switch (alertType) {
+      case VTSAlertType.ERROR_FILL:
+        return Border.all(color: const Color.fromRGBO(239, 112, 138, 1));
+      case VTSAlertType.ERROR_OUTLINE:
+        return Border.all(color: const Color.fromRGBO(239, 112, 138, 1));
+      case VTSAlertType.INFO_FILL:
+        return Border.all(color: const Color.fromRGBO(42, 177, 235, 1));
+      case VTSAlertType.INFO_OUTLINE:
+        return Border.all(color: const Color.fromRGBO(42, 177, 235, 1));
+      case VTSAlertType.SUCCESS_FILL:
+        return Border.all(color: const Color.fromRGBO(0, 171, 118, 1));
+      case VTSAlertType.SUCCESS_OUTLINE:
+        return Border.all(color: const Color.fromRGBO(0, 171, 118, 1));
+      case VTSAlertType.WARNING_FILL:
+        return Border.all(color: const Color.fromRGBO(219, 168, 22, 1));
+      case VTSAlertType.WARNING_OUTLINE:
+        return Border.all(color: const Color.fromRGBO(219, 168, 22, 1));
+      default:
+        return border ?? Border.all(color: Colors.black);
+    }
+  }
 }
