@@ -6,7 +6,7 @@ class VTSAlertCustom extends StatefulWidget {
   const VTSAlertCustom({
     Key? key,
     this.showButton = true,
-    this.title,
+    required this.title,
     this.titleTextStyle = const TextStyle(
       color: Colors.black87,
       fontSize: 20,
@@ -31,91 +31,68 @@ class VTSAlertCustom extends StatefulWidget {
     this.padding,
     this.shadow,
     this.borderRadius,
-    this.okButtonText,
-    this.cancelButtonText,
-    this.okButtonTextStyle = const TextStyle(
-      fontSize: 18,
-      color: Colors.lightBlue,
-    ),
-    this.cancelButtonTextStyle = const TextStyle(
-      fontSize: 18,
-      color: Colors.lightBlue,
-    ),
-    this.onTapCancel,
-    this.onTapOk,
+    this.closeButton,
+    this.duration,
   }) : super(key: key);
 
   /// Show button or not, default is true
   final bool showButton;
 
-  /// title of type [String] used to describe the title of the [VTSAlert]
-  final String? title;
+  /// title of type [String] used to describe the title of the [VTSAlertCustom]
+  final String title;
 
   ///type of [TextStyle] to change the style of the title
   final TextStyle titleTextStyle;
 
-  /// type of [Alignment] used to align the title text inside the [VTSAlert]
+  /// type of [Alignment] used to align the title text inside the [VTSAlertCustom]
   final Alignment? titleAlignment;
 
-  /// title of type [String] used to describe the subtitle of the [VTSAlert]
+  /// title of type [String] used to describe the subtitle of the [VTSAlertCustom]
   final String? subtitle;
 
   ///type of [TextStyle] to change the style of the subtitle
   final TextStyle subtitleTextStyle;
 
-  /// type of [Alignment] used to align the subtitle text inside the [VTSAlert]
+  /// type of [Alignment] used to align the subtitle text inside the [VTSAlertCustom]
   final Alignment? subtitleAlignment;
 
   /// topBar of  type [Widget] can be used to show a widget at the top of title.
   final Widget? topBar;
 
-  /// type of [Alignment] used to align the topBar widget [VTSAlert]
+  /// type of [Alignment] used to align the topBar widget [VTSAlertCustom]
   final Alignment? topBarAlignment;
 
   /// bottomBar of  type [Widget] can be used to show a widget at the bottom of subtitle.
   final Widget? bottomBar;
 
-  /// type of [Alignment] used to align the bottom widget [VTSAlert]
+  /// type of [Alignment] used to align the bottom widget [VTSAlertCustom]
   final Alignment? bottomBarAlignment;
 
-  /// type of [List] of type [BoxShadow] to give shadow to [VTSAlert]
+  /// type of [List] of type [BoxShadow] to give shadow to [VTSAlertCustom]
   final List<BoxShadow>? shadow;
 
-  /// type of [EdgeInsetsGeometry] to give padding inside [VTSAlert]
+  /// type of [EdgeInsetsGeometry] to give padding inside [VTSAlertCustom]
   final EdgeInsetsGeometry? padding;
 
-  /// type of [double] to give circular radius to [VTSAlert]
+  /// type of [double] to give circular radius to [VTSAlertCustom]
   final double? borderRadius;
 
-  ///pass color of type [Color] or [GFColors] for background of [VTSAlert]
+  ///pass color of type [Color] for background of [VTSAlertCustom]
   final Color? backgroundColor;
 
-  /// width of type [double] used to control the width of the [VTSAlert]
+  /// width of type [double] used to control the width of the [VTSAlertCustom]
   final double? width;
 
-  ///type of [VTSAlertWidgetType] which takes the type ie, basic, rounded and fullWidth for the [VTSAlert]
+  ///type of [VTSAlertWidgetType] which takes the type ie, basic, rounded and fullWidth for the [VTSAlertCustom]
   final VTSAlertWidgetType widgetType;
 
-  /// type of [Alignment] used to align the [VTSAlert]
+  /// type of [Alignment] used to align the [VTSAlertCustom]
   final Alignment? alignment;
 
-  /// type of [String] used to replace the text of cancel button in [VTSAlert]
-  final String? cancelButtonText;
+  final ElevatedButton? closeButton;
 
-  ///type of [TextStyle] to change the style of the cancel button text
-  final TextStyle cancelButtonTextStyle;
-
-  ///type of [TextStyle] to change the style of the ok button text
-  final TextStyle okButtonTextStyle;
-
-  /// type of [String] used to replace the text of ok button in [VTSAlert]
-  final String? okButtonText;
-
-  /// type of [Function] used for tap on ok button in [VTSAlert]
-  final void Function()? onTapOk;
-
-  /// type of [Function] used for tap on cancel button in [VTSAlert]
-  final void Function()? onTapCancel;
+  /// type of [Duration]
+  final Duration? duration;
 
   @override
   _VTSAlertCustomState createState() => _VTSAlertCustomState();
@@ -187,15 +164,7 @@ class _VTSAlertCustomState extends State<VTSAlertCustom>
                             )
                           : BorderRadius.zero,
                   color: widget.backgroundColor ?? Colors.white, // fix this
-                  boxShadow: widget.shadow ??
-                      [
-                        BoxShadow(
-                          color: Colors.black87.withOpacity(0.1),
-                          offset: const Offset(0, 1),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        )
-                      ],
+                  boxShadow: widget.shadow ?? [],
                 ),
                 child: ClipRRect(
                   borderRadius: widget.widgetType == VTSAlertWidgetType.ROUNDED
@@ -211,59 +180,28 @@ class _VTSAlertCustomState extends State<VTSAlertCustom>
                         child: widget.topBar ?? Container(),
                       ),
                       Align(
-                        alignment: widget.titleAlignment ?? Alignment.topLeft,
-                        child: widget.title != null
-                            ? Text(
-                                widget.title!,
-                                style: widget.titleTextStyle,
-                              )
-                            : Text(
-                                'Alert !!!!',
-                                style: widget.titleTextStyle,
-                              ),
-                      ),
+                          alignment: widget.titleAlignment ?? Alignment.topLeft,
+                          child: Text(
+                            widget.title,
+                            style: widget.titleTextStyle,
+                          )),
                       const SizedBox(
                         height: 10,
                       ),
-                      Align(
-                        alignment:
-                            widget.subtitleAlignment ?? Alignment.topLeft,
-                        child: widget.subtitle != null
-                            ? Text(
-                                widget.subtitle!,
+                      widget.subtitle != null
+                          ? Align(
+                              alignment:
+                                  widget.subtitleAlignment ?? Alignment.topLeft,
+                              child: Text(
+                                widget.subtitle ?? 'SubTitle',
                                 style: widget.subtitleTextStyle,
-                              )
-                            : Text(
-                                'This is subtitle.',
-                                style: widget.subtitleTextStyle,
-                              ),
-                      ),
+                              ))
+                          : Container(),
                       widget.showButton
                           ? Align(
                               alignment: widget.bottomBarAlignment ??
                                   Alignment.bottomRight,
-                              child: widget.bottomBar ??
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        TextButton(
-                                          child: Text(
-                                            widget.cancelButtonText ?? 'CANCEL',
-                                            style: widget.cancelButtonTextStyle,
-                                          ),
-                                          onPressed: widget.onTapCancel,
-                                        ),
-                                        TextButton(
-                                            child: Text(
-                                              widget.okButtonText ?? 'OK',
-                                              style: widget.okButtonTextStyle,
-                                            ),
-                                            onPressed: widget.onTapOk),
-                                      ],
-                                    ),
-                                  ),
+                              child: widget.bottomBar ?? Container(),
                             )
                           : Container(
                               height: 10,

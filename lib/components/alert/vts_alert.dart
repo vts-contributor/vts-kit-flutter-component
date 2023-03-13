@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vts_component/common/style/vts_color.dart';
+import 'package:vts_component/common/style/vts_common.dart';
+import 'package:vts_component/components/alert/styles.dart';
 import 'package:vts_component/components/alert/typing.dart';
 
 class VTSAlert extends StatefulWidget {
@@ -8,17 +11,21 @@ class VTSAlert extends StatefulWidget {
     this.icon,
     this.closeCustomIconButton,
     this.titleTextStyle = const TextStyle(
-      color: Colors.black87,
-      fontSize: 20,
-      fontWeight: FontWeight.w700,
-    ),
+        color: VTSColors.BLACK_1,
+        fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        overflow: TextOverflow.ellipsis),
     this.titleAlignment,
     this.subtitle,
     this.subtitleTextStyle = const TextStyle(
-      color: Colors.black87,
-      fontSize: 17,
-      fontWeight: FontWeight.w400,
-    ),
+        color: VTSColors.BLACK_1,
+        fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+        fontSize: 17,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+        overflow: TextOverflow.ellipsis),
     this.subtitleAlignment,
     this.topBar,
     this.topBarAlignment,
@@ -33,12 +40,13 @@ class VTSAlert extends StatefulWidget {
     this.shadow,
     this.border,
     this.borderRadius,
+    this.duration,
   }) : super(key: key);
 
-  /// head icon
+  /// type of [Icon] used to show icon at the left side of the the [VTSAlert]
   final Icon? icon;
 
-  // custom IconButton widget
+  /// type of [IconButton] used to show button with icon at the right side of the [VTSAlert]
   final IconButton? closeCustomIconButton;
 
   /// title of type [String] used to describe the title of the [VTSAlert]
@@ -83,7 +91,7 @@ class VTSAlert extends StatefulWidget {
   /// type of [BoxBorder]
   final BoxBorder? border;
 
-  ///pass color of type [Color] or [ ] for background of [VTSAlert]
+  /// pass color of type [Color] for background of [VTSAlert]
   final Color? backgroundColor;
 
   /// width of type [double] used to control the width of the [VTSAlert]
@@ -92,10 +100,14 @@ class VTSAlert extends StatefulWidget {
   ///type of [VTSAlertWidgetType] which takes the type ie, basic, rounded and fullWidth for the [VTSAlert]
   final VTSAlertWidgetType widgetType;
 
+  /// type of [VTSAlertType] which take the alert's type ERROR_OUTLINE, ERROR_FILL, SUCCESS_OUTLINE, SUCCESS_FILL, WARNING_OULINE, WARNING_FILL, INFO_OUTLINE, INFO_FILL for the [VTSAlert], This will apply the template to the [VTSAlert] and cannot modify some features like Color, Icon, TextStyle,... If you want to customize  VTSAlert widget in your own way , please don't insert or comment this line of code.
   final VTSAlertType? alertType;
 
   /// type of [Alignment] used to align the [VTSAlert]
   final Alignment? alignment;
+
+  /// type of [Duration]
+  final Duration? duration;
 
   @override
   _VTSAlertState createState() => _VTSAlertState();
@@ -108,7 +120,7 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: widget.duration ?? VTSCommon.ANIMATION_NORMAL_DURATION,
       vsync: this,
     );
     animation = CurvedAnimation(
@@ -158,7 +170,8 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                       bottom: 10,
                     ),
                 decoration: BoxDecoration(
-                  border: _getBorder(widget.alertType, widget.border),
+                  border: VTSAlertStyle()
+                      .getBorder(widget.alertType, widget.border),
                   borderRadius: widget.widgetType == VTSAlertWidgetType.BASIC
                       ? BorderRadius.circular(3)
                       : widget.widgetType == VTSAlertWidgetType.ROUNDED
@@ -166,17 +179,10 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                               widget.borderRadius ?? 10,
                             )
                           : BorderRadius.zero,
-                  color: _getBackgroundColor(
+                  color: VTSAlertStyle().getBackgroundColor(
                       widget.alertType, widget.backgroundColor),
-                  boxShadow: widget.shadow ??
-                      [
-                        BoxShadow(
-                          color: Colors.white.withOpacity(0),
-                          offset: const Offset(0, 0),
-                          blurRadius: 0,
-                          spreadRadius: 0,
-                        )
-                      ],
+                  boxShadow: VTSAlertStyle()
+                      .getListBoxShadow(widget.alertType, widget.shadow),
                 ),
                 child: ClipRRect(
                   borderRadius: widget.widgetType == VTSAlertWidgetType.ROUNDED
@@ -188,14 +194,14 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _getIcon(widget.alertType, widget.icon),
+                      VTSAlertStyle().getIcon(widget.alertType, widget.icon),
                       widget.icon != null || widget.alertType != null
                           ? const SizedBox(
-                              width: 10,
+                              width: 15,
                             )
                           : Container(),
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -209,7 +215,7 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                                   widget.titleAlignment ?? Alignment.topLeft,
                               child: Text(
                                 widget.title,
-                                style: _getTitleTextStyle(
+                                style: VTSAlertStyle().getTitleTextStyle(
                                     widget.alertType, widget.titleTextStyle),
                               ),
                             ),
@@ -224,9 +230,10 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                                         Alignment.topLeft,
                                     child: Text(
                                       widget.subtitle!,
-                                      style: _getSubtitleTextStyle(
-                                          widget.alertType,
-                                          widget.subtitleTextStyle),
+                                      style: VTSAlertStyle()
+                                          .getSubtitleTextStyle(
+                                              widget.alertType,
+                                              widget.subtitleTextStyle),
                                     ),
                                   )
                                 : Container(),
@@ -256,213 +263,4 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
           ],
         ),
       );
-  Widget _getIcon(VTSAlertType? alertType, Icon? icon) {
-    switch (alertType) {
-      case VTSAlertType.ERROR_FILL:
-        return const Icon(
-          Icons.highlight_off,
-          size: 30,
-          color: Color.fromRGBO(203, 0, 43, 1),
-        );
-      case VTSAlertType.ERROR_OUTLINE:
-        return const Icon(
-          Icons.highlight_off,
-          size: 30,
-          color: Color.fromRGBO(203, 0, 43, 1),
-        );
-      case VTSAlertType.INFO_FILL:
-        return const Icon(
-          Icons.info_outline,
-          size: 30,
-          color: Color.fromRGBO(42, 177, 235, 1),
-        );
-      case VTSAlertType.INFO_OUTLINE:
-        return const Icon(
-          Icons.info_outline,
-          size: 30,
-          color: Color.fromRGBO(42, 177, 235, 1),
-        );
-      case VTSAlertType.SUCCESS_FILL:
-        return const Icon(
-          Icons.check_circle_outline_outlined,
-          size: 30,
-          color: Color.fromRGBO(0, 171, 118, 1),
-        );
-      case VTSAlertType.SUCCESS_OUTLINE:
-        return const Icon(
-          Icons.check_circle_outline_outlined,
-          size: 30,
-          color: Color.fromRGBO(0, 171, 118, 1),
-        );
-      case VTSAlertType.WARNING_FILL:
-        return const Icon(
-          Icons.warning_amber_outlined,
-          size: 30,
-          color: Color.fromRGBO(219, 168, 22, 1),
-        );
-      case VTSAlertType.WARNING_OUTLINE:
-        return const Icon(
-          Icons.warning_amber_outlined,
-          size: 30,
-          color: Color.fromRGBO(219, 168, 22, 1),
-        );
-      default:
-        return icon ??
-            const SizedBox(
-              width: 20,
-            );
-    }
-  }
-
-  Color _getBackgroundColor(VTSAlertType? alertType, Color? backgroundColor) {
-    switch (alertType) {
-      case VTSAlertType.ERROR_FILL:
-        return const Color.fromRGBO(255, 245, 246, 1);
-      case VTSAlertType.ERROR_OUTLINE:
-        return const Color.fromRGBO(255, 245, 246, 1);
-      case VTSAlertType.INFO_FILL:
-        return const Color.fromRGBO(232, 248, 255, 1);
-      case VTSAlertType.INFO_OUTLINE:
-        return const Color.fromRGBO(232, 248, 255, 1);
-      case VTSAlertType.SUCCESS_FILL:
-        return const Color.fromRGBO(229, 252, 242, 1);
-      case VTSAlertType.SUCCESS_OUTLINE:
-        return const Color.fromRGBO(229, 252, 242, 1);
-      case VTSAlertType.WARNING_FILL:
-        return const Color.fromRGBO(251, 246, 231, 1);
-      case VTSAlertType.WARNING_OUTLINE:
-        return const Color.fromRGBO(251, 246, 231, 1);
-      default:
-        return backgroundColor ?? Colors.white;
-    }
-  }
-
-  TextStyle _getTitleTextStyle(
-      VTSAlertType? alertType, TextStyle? titleTextStyle) {
-    switch (alertType) {
-      case VTSAlertType.ERROR_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(203, 0, 43, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.ERROR_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(203, 0, 43, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.INFO_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(42, 177, 235, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.INFO_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(42, 177, 235, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.SUCCESS_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(0, 171, 118, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.SUCCESS_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(0, 171, 118, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.WARNING_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(219, 168, 22, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      case VTSAlertType.WARNING_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(219, 168, 22, 1),
-            fontSize: 20,
-            fontWeight: FontWeight.w700);
-      default:
-        return titleTextStyle ??
-            const TextStyle(
-              color: Colors.black87,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            );
-    }
-  }
-
-  TextStyle _getSubtitleTextStyle(
-      VTSAlertType? alertType, TextStyle? subtitleTextStyle) {
-    switch (alertType) {
-      case VTSAlertType.ERROR_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(203, 0, 43, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.ERROR_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(203, 0, 43, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.INFO_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(42, 177, 235, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.INFO_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(42, 177, 235, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.SUCCESS_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(42, 177, 235, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.SUCCESS_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(0, 171, 118, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.WARNING_FILL:
-        return const TextStyle(
-            color: Color.fromRGBO(219, 168, 22, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      case VTSAlertType.WARNING_OUTLINE:
-        return const TextStyle(
-            color: Color.fromRGBO(219, 168, 22, 1),
-            fontSize: 17,
-            fontWeight: FontWeight.w400);
-      default:
-        return subtitleTextStyle ??
-            const TextStyle(
-              color: Colors.black87,
-              fontSize: 17,
-              fontWeight: FontWeight.w400,
-            );
-    }
-  }
-
-  BoxBorder _getBorder(VTSAlertType? alertType, BoxBorder? border) {
-    switch (alertType) {
-      case VTSAlertType.ERROR_FILL:
-        return Border.all(color: const Color.fromRGBO(239, 112, 138, 1));
-      case VTSAlertType.ERROR_OUTLINE:
-        return Border.all(color: const Color.fromRGBO(239, 112, 138, 1));
-      case VTSAlertType.INFO_FILL:
-        return Border.all(color: const Color.fromRGBO(42, 177, 235, 1));
-      case VTSAlertType.INFO_OUTLINE:
-        return Border.all(color: const Color.fromRGBO(42, 177, 235, 1));
-      case VTSAlertType.SUCCESS_FILL:
-        return Border.all(color: const Color.fromRGBO(0, 171, 118, 1));
-      case VTSAlertType.SUCCESS_OUTLINE:
-        return Border.all(color: const Color.fromRGBO(0, 171, 118, 1));
-      case VTSAlertType.WARNING_FILL:
-        return Border.all(color: const Color.fromRGBO(219, 168, 22, 1));
-      case VTSAlertType.WARNING_OUTLINE:
-        return Border.all(color: const Color.fromRGBO(219, 168, 22, 1));
-      default:
-        return border ?? Border.all(color: Colors.black);
-    }
-  }
 }
