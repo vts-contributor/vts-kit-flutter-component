@@ -5,7 +5,6 @@ class VTSAlertCustom extends StatefulWidget {
   /// Alert has to be wrap inside the body like [GFFloatingWidget]. See [GFFloatingWidget]
   const VTSAlertCustom({
     Key? key,
-    this.showButton = true,
     required this.title,
     this.titleTextStyle = const TextStyle(
       color: Colors.black87,
@@ -30,13 +29,10 @@ class VTSAlertCustom extends StatefulWidget {
     this.alignment,
     this.padding,
     this.shadow,
+    this.border,
     this.borderRadius,
-    this.closeButton,
     this.duration,
   }) : super(key: key);
-
-  /// Show button or not, default is true
-  final bool showButton;
 
   /// title of type [String] used to describe the title of the [VTSAlertCustom]
   final String title;
@@ -73,6 +69,7 @@ class VTSAlertCustom extends StatefulWidget {
 
   /// type of [EdgeInsetsGeometry] to give padding inside [VTSAlertCustom]
   final EdgeInsetsGeometry? padding;
+  final Border? border;
 
   /// type of [double] to give circular radius to [VTSAlertCustom]
   final double? borderRadius;
@@ -88,8 +85,6 @@ class VTSAlertCustom extends StatefulWidget {
 
   /// type of [Alignment] used to align the [VTSAlertCustom]
   final Alignment? alignment;
-
-  final ElevatedButton? closeButton;
 
   /// type of [Duration]
   final Duration? duration;
@@ -156,6 +151,7 @@ class _VTSAlertCustomState extends State<VTSAlertCustom>
                       bottom: 10,
                     ),
                 decoration: BoxDecoration(
+                  border: widget.border ?? Border.all(),
                   borderRadius: widget.widgetType == VTSAlertWidgetType.BASIC
                       ? BorderRadius.circular(3)
                       : widget.widgetType == VTSAlertWidgetType.ROUNDED
@@ -163,7 +159,7 @@ class _VTSAlertCustomState extends State<VTSAlertCustom>
                               widget.borderRadius ?? 10,
                             )
                           : BorderRadius.zero,
-                  color: widget.backgroundColor ?? Colors.white, // fix this
+                  color: widget.backgroundColor ?? Colors.white,
                   boxShadow: widget.shadow ?? [],
                 ),
                 child: ClipRRect(
@@ -197,15 +193,11 @@ class _VTSAlertCustomState extends State<VTSAlertCustom>
                                 style: widget.subtitleTextStyle,
                               ))
                           : Container(),
-                      widget.showButton
-                          ? Align(
-                              alignment: widget.bottomBarAlignment ??
-                                  Alignment.bottomRight,
-                              child: widget.bottomBar ?? Container(),
-                            )
-                          : Container(
-                              height: 10,
-                            ),
+                      Align(
+                        alignment:
+                            widget.bottomBarAlignment ?? Alignment.bottomRight,
+                        child: widget.bottomBar ?? Container(),
+                      )
                     ],
                   ),
                 ),
