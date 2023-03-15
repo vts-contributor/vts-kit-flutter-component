@@ -40,7 +40,7 @@ class VTSAlert extends StatefulWidget {
     this.shadow,
     this.border,
     this.borderRadius,
-    this.duration,
+    this.animationDuration,
   }) : super(key: key);
 
   /// type of [Icon] used to show icon at the left side of the the [VTSAlert]
@@ -107,7 +107,7 @@ class VTSAlert extends StatefulWidget {
   final Alignment? alignment;
 
   /// type of [Duration]
-  final Duration? duration;
+  final Duration? animationDuration;
 
   @override
   _VTSAlertState createState() => _VTSAlertState();
@@ -120,7 +120,7 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(
-      duration: widget.duration ?? VTSCommon.ANIMATION_NORMAL_DURATION,
+      duration: widget.animationDuration ?? VTSCommon.ANIMATION_NORMAL_DURATION,
       vsync: this,
     );
     animation = CurvedAnimation(
@@ -201,7 +201,7 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                             )
                           : Container(),
                       Expanded(
-                        flex: 3,
+                        flex: 5,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -248,7 +248,6 @@ class _VTSAlertState extends State<VTSAlert> with TickerProviderStateMixin {
                       Expanded(
                         flex: 1,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             widget.closeCustomIconButton ?? Container(),

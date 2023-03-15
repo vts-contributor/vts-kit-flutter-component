@@ -51,6 +51,5 @@ export 'package:vts_component/components/tabs/index.dart';
 export 'package:vts_component/components/tile/index.dart';
 export 'package:vts_component/components/toast/index.dart';
 export 'package:vts_component/components/toggle/index.dart';
-
 export 'common/style/vts_color.dart';
 export 'common/style/vts_common.dart';

@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:vts_component/components/alert/typing.dart';
+import 'package:vts_component/common/style/vts_common.dart';
+
+import '../../common/style/vts_color.dart';
 
 class VTSAlertCustom extends StatefulWidget {
-  /// Alert has to be wrap inside the body like [GFFloatingWidget]. See [GFFloatingWidget]
   const VTSAlertCustom({
     Key? key,
     required this.title,
     this.titleTextStyle = const TextStyle(
-      color: Colors.black87,
-      fontSize: 20,
-      fontWeight: FontWeight.w700,
-    ),
+        color: VTSColors.BLACK_1,
+        fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        height: 1.5,
+        overflow: TextOverflow.ellipsis),
     this.titleAlignment,
     this.subtitle,
     this.subtitleTextStyle = const TextStyle(
-      color: Colors.black87,
-      fontSize: 17,
-      fontWeight: FontWeight.w400,
-    ),
+        color: VTSColors.BLACK_1,
+        fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+        fontSize: 17,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+        overflow: TextOverflow.ellipsis),
     this.subtitleAlignment,
     this.topBar,
     this.topBarAlignment,
@@ -31,7 +37,7 @@ class VTSAlertCustom extends StatefulWidget {
     this.shadow,
     this.border,
     this.borderRadius,
-    this.duration,
+    this.animationDuration,
   }) : super(key: key);
 
   /// title of type [String] used to describe the title of the [VTSAlertCustom]
@@ -87,7 +93,7 @@ class VTSAlertCustom extends StatefulWidget {
   final Alignment? alignment;
 
   /// type of [Duration]
-  final Duration? duration;
+  final Duration? animationDuration;
 
   @override
   _VTSAlertCustomState createState() => _VTSAlertCustomState();
@@ -101,7 +107,7 @@ class _VTSAlertCustomState extends State<VTSAlertCustom>
   @override
   void initState() {
     animationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: widget.animationDuration ?? VTSCommon.ANIMATION_NORMAL_DURATION,
       vsync: this,
     );
     animation = CurvedAnimation(
