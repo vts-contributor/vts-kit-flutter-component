@@ -44,6 +44,7 @@ export 'package:vts_component/components/base/field_control/typings.dart';
 export 'package:vts_component/components/button/index.dart';
 export 'package:vts_component/components/card/index.dart';
 export 'package:vts_component/components/carousel/index.dart';
+export 'package:vts_component/components/date_picker/index.dart';
 export 'package:vts_component/components/dropdown/index.dart';
 export 'package:vts_component/components/image/index.dart';
 export 'package:vts_component/components/progress_bar/index.dart';

@@ -20,10 +20,16 @@ class VTSCommon {
   static const Color SPLASH_COLOR = Color.fromRGBO(0, 0, 0, 0.15);
 
   // Box shadow
-  static const BoxShadow BLUR3_X0_Y1 =
-      BoxShadow(color: BOX_SHADOW_COLOR, offset: Offset(0, 1), blurRadius: 3);
-  static const BoxShadow BLUR8_X0_Y0 =
-      BoxShadow(color: BOX_SHADOW_COLOR, offset: Offset(0, 0), blurRadius: 8);
+  static const BoxShadow BLUR3_X0_Y1 = BoxShadow(
+    color: BOX_SHADOW_COLOR,
+    offset: Offset(0, 1),
+    blurRadius: 3,
+  );
+  static const BoxShadow BLUR8_X0_Y0 = BoxShadow(
+    color: BOX_SHADOW_COLOR,
+    offset: Offset(0, 0),
+    blurRadius: 8,
+  );
 
   // Border
   static Color BORDER_COLOR_LIGHT = VTSColors.ILUS_GRAY_6;
@@ -46,51 +52,76 @@ class VTSCommon {
   static Offset TRANSLATION_BOTTOM_LEFT = const Offset(-0.5, 0.5);
   static Offset TRANSLATION_BOTTOM_RIGHT = const Offset(0.5, 0.5);
 
-  // Text styly
+  // Text style
   static TextStyle TEXT_STYLE_BODY_1_16 = const TextStyle(
-      color: VTSColors.BLACK_1,
-      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-      fontSize: 16.0,
-      fontWeight: FontWeight.normal,
-      height: 1.5);
+    color: VTSColors.BLACK_1,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal,
+    height: 1.5
+  );
+  static TextStyle TEXT_STYLE_SUBTITLE_1_18 = const TextStyle(
+    color: VTSColors.BLACK_1,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w700,
+    height: 1.5,
+    overflow: TextOverflow.ellipsis,
+  );
   static TextStyle TEXT_STYLE_SUBTITLE_1_20 = const TextStyle(
-      color: VTSColors.BLACK_1,
-      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-      fontSize: 20.0,
-      fontWeight: FontWeight.w700,
-      height: 1.5,
-      overflow: TextOverflow.ellipsis);
+    color: VTSColors.BLACK_1,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w700,
+    height: 1.5,
+    overflow: TextOverflow.ellipsis,
+  );
   static TextStyle TEXT_STYLE_SUBTITLE_2_16 = const TextStyle(
-      color: VTSColors.BLACK_1,
-      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-      fontSize: 16.0,
-      fontWeight: FontWeight.w700,
-      height: 1.5,
-      overflow: TextOverflow.ellipsis);
+    color: VTSColors.BLACK_1,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 16.0,
+    fontWeight: FontWeight.w700,
+    height: 1.5,
+    overflow: TextOverflow.ellipsis,
+  );
+  static TextStyle TEXT_STYLE_SUBTITLE_2_18 = const TextStyle(
+    color: VTSColors.GRAY_3,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w700,
+    height: 1.5,
+    overflow: TextOverflow.ellipsis,
+  );
   static TextStyle TEXT_STYLE_LINK_TEXT = const TextStyle(
-      color: VTSColors.PRIMARY_6,
-      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-      fontSize: 16.0,
-      fontWeight: FontWeight.normal,
-      height: 1.5,
-      decoration: TextDecoration.underline,
-      overflow: TextOverflow.ellipsis);
+    color: VTSColors.PRIMARY_6,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+    decoration: TextDecoration.underline,
+    overflow: TextOverflow.ellipsis,
+  );
   static TextStyle TEXT_STYLE_BODY_2_14 = const TextStyle(
-      color: VTSColors.GRAY_2,
-      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-      fontSize: 14.0,
-      fontWeight: FontWeight.normal,
-      height: 1.57,
-      overflow: TextOverflow.ellipsis);
+    color: VTSColors.GRAY_2,
+    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+    fontSize: 14.0,
+    fontWeight: FontWeight.normal,
+    height: 1.57,
+    overflow: TextOverflow.ellipsis,
+  );
 
   // Control (All about form field)
   static double CONTROL_HEIGHT_SM = 40.0;
   static double CONTROL_HEIGHT_MD = 48.0;
 
-  static EdgeInsets CONTROL_PADDING_SM =
-      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0);
-  static EdgeInsets CONTROL_PADDING_MD =
-      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0);
+  static EdgeInsets CONTROL_PADDING_SM = const EdgeInsets.symmetric(
+    vertical: 0.0,
+    horizontal: 16.0,
+  );
+  static EdgeInsets CONTROL_PADDING_MD = const EdgeInsets.symmetric(
+    vertical: 0.0,
+    horizontal: 16.0,
+  );
 
   static EdgeInsets CONTROL_MARGIN_SM = const EdgeInsets.all(0);
   static EdgeInsets CONTROL_MARGIN_MD = const EdgeInsets.all(0);
