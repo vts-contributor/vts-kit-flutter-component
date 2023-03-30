@@ -81,3 +81,4 @@ test/.test_coverage.dart
 /test
 .dart_tool
 *.rar
+pubspec.lock
