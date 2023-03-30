@@ -26,7 +26,7 @@ class VTSCardStyle {
 
         'bodyPadding': const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 16.0),
         'avatarMargin': const EdgeInsets.only(right: 8.0),
-        
+
         // Avatar Type
         'avatarSize': 56.0,
 
@@ -41,7 +41,7 @@ class VTSCardStyle {
         'anchorTop': 16.0,
         'anchorRight': 16.0,
       },
-      
+
       'containerPadding': {
         VTSCardType.FULL_IMAGE: const EdgeInsets.only(right: 8.0)
       },
@@ -56,13 +56,13 @@ class VTSCardStyle {
 
   // ignore: type_annotate_public_apis
   static dynamic get(String key, {selector, List<Object> extra = const []}) =>
-    selector != null
-      ? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, key, selector, ...extra]) 
-      ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, key, selector])
-      ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key, ...extra])
-      ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key])
-      : retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key, ...extra]) 
-      ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key]);
+      selector != null
+          ? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, key, selector, ...extra])
+          ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, key, selector])
+          ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key, ...extra])
+          ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key])
+          : retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key, ...extra])
+          ?? retriveItem([VTSCardStyle.VTS_CARD_PREFIX, 'default', key]);
 
   static dynamic retriveItem(List<Object> buildKeys) {
     final key = buildKeys.map((e) => e.toString()).join('_');

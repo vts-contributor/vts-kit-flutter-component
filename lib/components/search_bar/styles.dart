@@ -38,8 +38,8 @@ class VTSSearchBarStyle {
   };
 
   // ignore: type_annotate_public_apis
-  static dynamic get(String key, { selector, List<Object> extra = const [] }) 
-    => selector != null 
+  static dynamic get(String key, { selector, List<Object> extra = const [] })
+  => selector != null
       ? retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, key, selector, ...extra])
       ?? retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, key, selector])
       : retriveItem([VTSSearchBarStyle.VTS_SEARCH_BAR_PREFIX, 'default', key, ...extra])

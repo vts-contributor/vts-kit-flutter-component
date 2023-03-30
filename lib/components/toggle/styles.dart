@@ -32,7 +32,12 @@ class VTSToggleStyle {
         "thumbBorderRadius": BorderRadius.circular(100),
         "trackHeight": 14.0,
         "trackWidth": 34.0,
-        "boxShadow": const [BoxShadow(blurRadius: 2.0, offset: Offset(0.0, 1.0), color: Color.fromRGBO(48, 79, 254, 0.54))],
+        "boxShadow": const [
+          BoxShadow(
+              blurRadius: 2.0,
+              offset: Offset(0.0, 1.0),
+              color: Color.fromRGBO(48, 79, 254, 0.54))
+        ],
         "thumbPadding": -3.0,
         "disabledTrackColor": VTSColors.GRAY_4.withOpacity(0.24),
         "disabledThumbColor": VTSColors.WHITE_1,
@@ -49,20 +54,28 @@ class VTSToggleStyle {
   };
 
   // ignore: type_annotate_public_apis
-  static dynamic get(String key, { selector, List<Object> extra = const [] }) 
-    => selector != null 
-      ? retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, selector, key, ...extra])
-      ?? retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, selector, key])
-      : retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, 'default', key, ...extra])
-      ?? retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, 'default', key]);
-
+  static dynamic get(String key, {selector, List<Object> extra = const []}) =>
+      selector != null
+          ? retriveItem([
+                VTSToggleStyle.VTS_TOGGLE_PREFIX,
+                selector,
+                key,
+                ...extra
+              ]) ??
+              retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, selector, key])
+          : retriveItem([
+                VTSToggleStyle.VTS_TOGGLE_PREFIX,
+                'default',
+                key,
+                ...extra
+              ]) ??
+              retriveItem([VTSToggleStyle.VTS_TOGGLE_PREFIX, 'default', key]);
 
   static dynamic retriveItem(List<Object> buildKeys) {
     final key = buildKeys.map((e) => e.toString()).join('_');
     if (VTSToggleStyle.Content.containsKey(key)) {
       return VTSToggleStyle.Content[key];
-    }
-    else {
+    } else {
       return null;
     }
   }

@@ -50,6 +50,7 @@ export 'package:vts_component/components/rating_bar/index.dart';
 export 'package:vts_component/components/search_bar/index.dart';
 export 'package:vts_component/components/shimmer/shimmer.dart';
 export 'package:vts_component/components/tabs/index.dart';
+export 'package:vts_component/components/textfield/index.dart';
 export 'package:vts_component/components/tile/index.dart';
 export 'package:vts_component/components/toast/index.dart';
 export 'package:vts_component/components/toggle/index.dart';
