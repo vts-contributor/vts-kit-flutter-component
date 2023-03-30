@@ -44,21 +44,21 @@ class VTSColors {
   static const Color FUNC_YELLOW_4 = Color(0xFFE8C76A);
   static const Color FUNC_YELLOW_5 = Color(0xFFF2E1AE);
   static const Color FUNC_YELLOW_6 = Color(0xFFFBF6E7);
-  
+
   static const Color FUNC_GREEN_1 = Color(0xFF006339);
   static const Color FUNC_GREEN_2 = Color(0xFF00884F);
   static const Color FUNC_GREEN_3 = Color(0xFF00AB76);
   static const Color FUNC_GREEN_4 = Color(0xFF46CD96);
   static const Color FUNC_GREEN_5 = Color(0xFFA7EDCA);
   static const Color FUNC_GREEN_6 = Color(0xFFE5FCF2);
-    
+
   static const Color FUNC_BLUE_1 = Color(0xFF004E7A);
   static const Color FUNC_BLUE_2 = Color(0xFF0377AD);
   static const Color FUNC_BLUE_3 = Color(0xFF0593CF);
   static const Color FUNC_BLUE_4 = Color(0xFF2AB1EB);
   static const Color FUNC_BLUE_5 = Color(0xFFA6C7F5);
   static const Color FUNC_BLUE_6 = Color(0xFFE8F8FF);
- 
+
   static const Color ILUS_RED_1 = Color(0xFF7A252D);
   static const Color ILUS_RED_2 = Color(0xFFA02C34);
   static const Color ILUS_RED_3 = Color(0xFFEF0F3F);

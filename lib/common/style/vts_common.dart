@@ -20,8 +20,10 @@ class VTSCommon {
   static const Color SPLASH_COLOR = Color.fromRGBO(0, 0, 0, 0.15);
 
   // Box shadow
-  static const BoxShadow BLUR3_X0_Y1 = BoxShadow(color: BOX_SHADOW_COLOR, offset: Offset(0, 1), blurRadius: 3);
-  static const BoxShadow BLUR8_X0_Y0 = BoxShadow(color: BOX_SHADOW_COLOR, offset: Offset(0, 0), blurRadius: 8);
+  static const BoxShadow BLUR3_X0_Y1 =
+      BoxShadow(color: BOX_SHADOW_COLOR, offset: Offset(0, 1), blurRadius: 3);
+  static const BoxShadow BLUR8_X0_Y0 =
+      BoxShadow(color: BOX_SHADOW_COLOR, offset: Offset(0, 0), blurRadius: 8);
 
   // Border
   static Color BORDER_COLOR_LIGHT = VTSColors.ILUS_GRAY_6;
@@ -31,7 +33,8 @@ class VTSCommon {
   static BorderRadius BORDER_RADIUS_SQUARE = BorderRadius.zero;
   static BorderRadius BORDER_RADIUS_PILL = BorderRadius.circular(50);
   static BorderRadius BORDER_RADIUS_CIRCLE = BorderRadius.circular(100);
-  static BorderRadius BORDER_RADIUS_STANDARD = BorderRadius.circular(BASE_BORDER_RADIUS);
+  static BorderRadius BORDER_RADIUS_STANDARD =
+      BorderRadius.circular(BASE_BORDER_RADIUS);
 
   // Position
   static List<double?> LTRB_TOP_RIGHT = [null, 0, 0, null];
@@ -45,77 +48,79 @@ class VTSCommon {
 
   // Text styly
   static TextStyle TEXT_STYLE_BODY_1_16 = const TextStyle(
-    color: VTSColors.BLACK_1,
-    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-    fontSize: 16.0,
-    fontWeight: FontWeight.normal,
-    height: 1.5
-  );
+      color: VTSColors.BLACK_1,
+      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+      fontSize: 16.0,
+      fontWeight: FontWeight.normal,
+      height: 1.5);
   static TextStyle TEXT_STYLE_SUBTITLE_1_20 = const TextStyle(
-    color: VTSColors.BLACK_1,
-    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-    fontSize: 20.0,
-    fontWeight: FontWeight.w700,
-    height: 1.5,
-    overflow: TextOverflow.ellipsis
-  );
+      color: VTSColors.BLACK_1,
+      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+      fontSize: 20.0,
+      fontWeight: FontWeight.w700,
+      height: 1.5,
+      overflow: TextOverflow.ellipsis);
   static TextStyle TEXT_STYLE_SUBTITLE_2_16 = const TextStyle(
-    color: VTSColors.BLACK_1,
-    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-    fontSize: 16.0,
-    fontWeight: FontWeight.w700,
-    height: 1.5,
-    overflow: TextOverflow.ellipsis
-  );
+      color: VTSColors.BLACK_1,
+      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+      fontSize: 16.0,
+      fontWeight: FontWeight.w700,
+      height: 1.5,
+      overflow: TextOverflow.ellipsis);
   static TextStyle TEXT_STYLE_LINK_TEXT = const TextStyle(
-    color: VTSColors.PRIMARY_6,
-    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-    fontSize: 16.0,
-    fontWeight: FontWeight.normal,
-    height: 1.5,
-    decoration: TextDecoration.underline,
-    overflow: TextOverflow.ellipsis
-  );
+      color: VTSColors.PRIMARY_6,
+      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+      fontSize: 16.0,
+      fontWeight: FontWeight.normal,
+      height: 1.5,
+      decoration: TextDecoration.underline,
+      overflow: TextOverflow.ellipsis);
   static TextStyle TEXT_STYLE_BODY_2_14 = const TextStyle(
-    color: VTSColors.GRAY_2,
-    fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
-    fontSize: 14.0,
-    fontWeight: FontWeight.normal,
-    height: 1.57,
-    overflow: TextOverflow.ellipsis
-  );
+      color: VTSColors.GRAY_2,
+      fontFamily: VTSCommon.DEFAULT_FONT_FAMILY,
+      fontSize: 14.0,
+      fontWeight: FontWeight.normal,
+      height: 1.57,
+      overflow: TextOverflow.ellipsis);
 
   // Control (All about form field)
-  static double CONTROL_HEIGHT_SM = 40.0; 
+  static double CONTROL_HEIGHT_SM = 40.0;
   static double CONTROL_HEIGHT_MD = 48.0;
-  
-  static EdgeInsets CONTROL_PADDING_SM = const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0); 
-  static EdgeInsets CONTROL_PADDING_MD = const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0); 
+
+  static EdgeInsets CONTROL_PADDING_SM =
+      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0);
+  static EdgeInsets CONTROL_PADDING_MD =
+      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0);
 
   static EdgeInsets CONTROL_MARGIN_SM = const EdgeInsets.all(0);
   static EdgeInsets CONTROL_MARGIN_MD = const EdgeInsets.all(0);
 
-  static Color CONTROL_BG_DEFAULT = VTSColors.WHITE_1; 
-  static Color CONTROL_BG_HOVER = VTSColors.WHITE_1; 
-  static Color CONTROL_BG_FOCUS = VTSColors.WHITE_1; 
+  static Color CONTROL_BG_DEFAULT = VTSColors.WHITE_1;
+  static Color CONTROL_BG_HOVER = VTSColors.WHITE_1;
+  static Color CONTROL_BG_FOCUS = VTSColors.WHITE_1;
   static Color CONTROL_BG_DISABLE = VTSColors.GRAY_5;
   static Color CONTROL_BG_ERROR = VTSColors.WHITE_1;
 
-  static TextStyle CONTROL_TEXT_STYLE_DEFAULT = VTSCommon.TEXT_STYLE_BODY_1_16.merge(const TextStyle(color: VTSColors.BLACK_1)); 
-  static TextStyle CONTROL_TEXT_STYLE_HOVER = VTSCommon.TEXT_STYLE_BODY_1_16.merge(const TextStyle(color: VTSColors.BLACK_1)); 
-  static TextStyle CONTROL_TEXT_STYLE_FOCUS = VTSCommon.TEXT_STYLE_BODY_1_16.merge(const TextStyle(color: VTSColors.BLACK_1)); 
-  static TextStyle CONTROL_TEXT_STYLE_DISABLE = VTSCommon.TEXT_STYLE_BODY_1_16.merge(const TextStyle(color: VTSColors.GRAY_3)); 
-  static TextStyle CONTROL_TEXT_STYLE_ERROR = VTSCommon.TEXT_STYLE_BODY_1_16.merge(const TextStyle(color: VTSColors.BLACK_1)); 
+  static TextStyle CONTROL_TEXT_STYLE_DEFAULT = VTSCommon.TEXT_STYLE_BODY_1_16
+      .merge(const TextStyle(color: VTSColors.BLACK_1));
+  static TextStyle CONTROL_TEXT_STYLE_HOVER = VTSCommon.TEXT_STYLE_BODY_1_16
+      .merge(const TextStyle(color: VTSColors.BLACK_1));
+  static TextStyle CONTROL_TEXT_STYLE_FOCUS = VTSCommon.TEXT_STYLE_BODY_1_16
+      .merge(const TextStyle(color: VTSColors.BLACK_1));
+  static TextStyle CONTROL_TEXT_STYLE_DISABLE = VTSCommon.TEXT_STYLE_BODY_1_16
+      .merge(const TextStyle(color: VTSColors.GRAY_3));
+  static TextStyle CONTROL_TEXT_STYLE_ERROR = VTSCommon.TEXT_STYLE_BODY_1_16
+      .merge(const TextStyle(color: VTSColors.BLACK_1));
 
-  static Color CONTROL_BORDER_COLOR_DEFAULT = VTSColors.GRAY_3; 
-  static Color CONTROL_BORDER_COLOR_HOVER = VTSColors.GRAY_1; 
-  static Color CONTROL_BORDER_COLOR_FOCUS = VTSColors.GRAY_1; 
+  static Color CONTROL_BORDER_COLOR_DEFAULT = VTSColors.GRAY_3;
+  static Color CONTROL_BORDER_COLOR_HOVER = VTSColors.GRAY_1;
+  static Color CONTROL_BORDER_COLOR_FOCUS = VTSColors.GRAY_1;
   static Color CONTROL_BORDER_COLOR_DISABLE = VTSColors.GRAY_5;
   static Color CONTROL_BORDER_COLOR_ERROR = VTSColors.PRIMARY_1;
-  
+
   static List<BoxShadow>? CONTROL_BOX_SHADOW_DEFAULT = null;
   static List<BoxShadow>? CONTROL_BOX_SHADOW_HOVER = null;
-  static List<BoxShadow>? CONTROL_BOX_SHADOW_FOCUS = [VTSCommon.BLUR8_X0_Y0]; 
+  static List<BoxShadow>? CONTROL_BOX_SHADOW_FOCUS = [VTSCommon.BLUR8_X0_Y0];
   static List<BoxShadow>? CONTROL_BOX_SHADOW_DISABLE = null;
   static List<BoxShadow>? CONTROL_BOX_SHADOW_ERROR = null;
 

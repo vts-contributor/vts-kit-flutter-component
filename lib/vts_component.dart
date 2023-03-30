@@ -37,6 +37,7 @@ library vts_component;
 // export 'types/vt_typography_type.dart';
 
 export 'package:vts_component/components/accordion/index.dart';
+export 'package:vts_component/components/alert/index.dart';
 export 'package:vts_component/components/avatar/index.dart';
 export 'package:vts_component/components/badge/index.dart';
 export 'package:vts_component/components/base/field_control/typings.dart';
@@ -54,6 +55,5 @@ export 'package:vts_component/components/textfield/index.dart';
 export 'package:vts_component/components/tile/index.dart';
 export 'package:vts_component/components/toast/index.dart';
 export 'package:vts_component/components/toggle/index.dart';
-
 export 'common/style/vts_color.dart';
 export 'common/style/vts_common.dart';
