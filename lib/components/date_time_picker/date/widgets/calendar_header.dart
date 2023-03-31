@@ -52,6 +52,8 @@ class CalendarHeader extends StatelessWidget {
                   onTap: onHeaderTap,
                   onLongPress: onHeaderLongPress,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
                         text,
@@ -60,11 +62,9 @@ class CalendarHeader extends StatelessWidget {
                             ? TextAlign.center
                             : TextAlign.start,
                       ),
-                      const CustomIconButton(
-                        icon: Icon(
-                          Icons.chevron_right_rounded,
-                          color: Colors.black,
-                        ),
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        color: Colors.black,
                       ),
                     ],
                   ),
