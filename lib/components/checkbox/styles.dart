@@ -26,7 +26,7 @@ class VTSCheckboxStyle{
           VTSCheckboxType.SQUARE: BorderRadius.zero,
         },
         'checkboxMargin' : {
-          VTSCheckboxType.CIRCLE : const EdgeInsets.all(40),
+          VTSCheckboxType.CIRCLE : EdgeInsets.zero,
           VTSCheckboxType.BASIC : EdgeInsets.zero,
           VTSCheckboxType.SQUARE : EdgeInsets.zero
         },
