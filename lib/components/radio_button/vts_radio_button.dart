@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vts_component/components/radio_button/style.dart';
 import 'package:vts_component/components/radio_button/typings.dart';
@@ -122,10 +121,11 @@ class _VTSRadioState<T> extends State<VTSRadioButton<T>> with TickerProviderStat
   Widget build(BuildContext context) {
     selected = widget.value == widget.groupValue;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize : MainAxisSize.min,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InkWell(
                 borderRadius : getStyle('radioButtonBorderRadius',[widget.vtsType]),
@@ -159,23 +159,22 @@ class _VTSRadioState<T> extends State<VTSRadioButton<T>> with TickerProviderStat
                       ],
                     ) : widget.inactiveIcon)
             ),
-            SizedBox(width: widget.titleMargin),
-            Container(child: Text(widget.title,style: TextStyle(
+            Container(
+              margin: EdgeInsets.only(left: widget.titleMargin),
+              child: Text(widget.title,style: TextStyle(
                 color: widget.validate ? widget.alertColor : widget.titleFontColor,
                 fontSize: radioButtonSize * 0.65
             )),)
           ],
         ),
-        if (widget.validate)...[
-          SizedBox(height: widget.errorMargin),
           Container(
-            alignment: Alignment.centerLeft,
-            child: Text(widget.errorMessage,
+            margin: EdgeInsets.only(top: widget.errorMargin),
+            child: Text(widget.validate ? widget.errorMessage : '',
                 style: TextStyle(
                     fontSize: radioButtonSize * 0.5,
                     color: widget.alertColor
                 )),
-          )]
+          )
 
       ],
     ) ;

@@ -5,8 +5,8 @@ import 'package:vts_component/components/checkbox/typings.dart';
 
 import '../../common/style/vts_color.dart';
 
-class VTSCheckbox extends StatefulWidget{
-   VTSCheckbox({
+class VTSCheckBox extends StatefulWidget{
+   const VTSCheckBox({
     Key? key,
     this.vtsType = VTSCheckboxType.BASIC,
     this.size = VTSCheckboxSize.MD,
@@ -17,7 +17,6 @@ class VTSCheckbox extends StatefulWidget{
     required this.onChanged,
     required this.value,
     this.icon = Icons.check,
-    this.activeIcon ,
     this.inactiveIcon,
     this.autofocus = false,
     this.focusNode,
@@ -55,8 +54,8 @@ class VTSCheckbox extends StatefulWidget{
    ///type of [bool] used to set the current state of the checkbox
    final bool value;
 
-   /// type of [Widget] used to change the  checkbox's active icon
-   late Widget? activeIcon;
+   // /// type of [Widget] used to change the  checkbox's active icon
+   // late Widget? activeIcon;
 
    /// type of [Widget] used to change the  checkbox's inactive icon
    final Widget? inactiveIcon;
@@ -94,12 +93,14 @@ class VTSCheckbox extends StatefulWidget{
 
 
   @override
-  State<StatefulWidget> createState() => VTSCheckboxState();
+  State<StatefulWidget> createState() => VTSCheckBoxState();
 }
 
-class VTSCheckboxState extends State<VTSCheckbox>{
+class VTSCheckBoxState extends State<VTSCheckBox>{
   bool get enabled => widget.onChanged != null;
   late double checkboxSize;
+  Widget? activeIconState;
+  Widget? inActiveIconState;
 
   dynamic getStyle(
       String key,
@@ -110,11 +111,13 @@ class VTSCheckboxState extends State<VTSCheckbox>{
   void initState() {
     super.initState();
     checkboxSize = getStyle('size', [widget.size]);
-    widget.activeIcon ??= Icon(
-        widget.icon,
-        size: checkboxSize * 0.7,
-        color: VTSColors.WHITE_1,
-      );
+    activeIconState ??= Icon(
+      widget.icon,
+      size: checkboxSize * 0.7,
+      color: VTSColors.WHITE_1,
+    );
+
+    inActiveIconState = widget.inactiveIcon;
   }
 
   @override
@@ -122,67 +125,63 @@ class VTSCheckboxState extends State<VTSCheckbox>{
       enabled: enabled,
       autofocus: widget.autofocus,
       focusNode: widget.focusNode,
-      child:Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-          InkResponse(
-            highlightShape: getStyle('checkboxHighlightShape', [widget.vtsType]),
-            containedInkWell: getStyle('checkboxContainedInkWell', [widget.vtsType]),
-            canRequestFocus: enabled,
-            onTap: widget.onChanged != null
-                ? () {
-              widget.onChanged!(!widget.value);
-            } : null,
-            child: Container(
-              height: checkboxSize,
-              width: checkboxSize,
-              margin: getStyle('checkboxMargin', [widget.vtsType]),
-              decoration: BoxDecoration(
-                  color: enabled
-                    ? widget.validate ? widget.alertColor.withOpacity(0.3)
-                      : widget.value
-                      ? widget.activeBgColor
-                      : widget.inactiveBgColor
-                      : VTSColors.GRAY_3,
-                  borderRadius: getStyle('checkboxBorderRadius', [widget.vtsType]),
-                  border: Border.all(
-                      color: widget.validate
-                          ? widget.alertColor
-                          : widget.value
-                          ? widget.activeBorderColor
-                          : widget.inActiveBorderColor
-                  )
-              ),
-              child: widget.value ?
-                    widget.activeIcon
-                  : widget.inactiveIcon,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize : MainAxisSize.min,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkResponse(
+                  highlightShape: getStyle('checkboxHighlightShape', [widget.vtsType]),
+                  containedInkWell: getStyle('checkboxContainedInkWell', [widget.vtsType]),
+                  canRequestFocus: enabled,
+                  onTap: widget.onChanged != null
+                      ? () {
+                    widget.onChanged!(!widget.value);
+                  } : null,
+                  child: Container(
+                    height: checkboxSize,
+                    width: checkboxSize,
+                    margin: getStyle('checkboxMargin', [widget.vtsType]),
+                    decoration: BoxDecoration(
+                        color: enabled
+                            ? widget.validate ? widget.alertColor.withOpacity(0.3)
+                            : widget.value
+                            ? widget.activeBgColor
+                            : widget.inactiveBgColor
+                            : VTSColors.GRAY_3,
+                        borderRadius: getStyle('checkboxBorderRadius', [widget.vtsType]),
+                        border: Border.all(
+                            color: widget.validate
+                                ? widget.alertColor
+                                : widget.value
+                                ? widget.activeBorderColor
+                                : widget.inActiveBorderColor
+                        )
+                    ),
+                    child: widget.value ?
+                    activeIconState
+                        : inActiveIconState,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: widget.titleMargin),
+                  child: Text(widget.title,style: TextStyle(
+                      color: widget.validate ? widget.alertColor : widget.titleFontColor,
+                      fontSize: checkboxSize * 0.65
+                  )),)
+              ],
             ),
-          ),
-          SizedBox(width: widget.titleMargin),
-          Container(child: Text(widget.title,style: TextStyle(
-            color: widget.validate ? widget.alertColor : widget.titleFontColor,
-            fontSize: checkboxSize * 0.65
-          )),)
-            ],
-          ),
-          if (widget.validate)...[
-            SizedBox(height: widget.errorMargin),
-            Container(
-            alignment: Alignment.centerLeft,
-            child: Text(widget.errorMessage,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: checkboxSize * 0.5,
-                    color: widget.alertColor
-                )),
-          )]
-        ],
-      )
+              Container(
+                margin: EdgeInsets.only(top: widget.errorMargin),
+                child: Text(widget.validate ? widget.errorMessage : '',
+                    style: TextStyle(
+                        fontSize: checkboxSize * 0.5,
+                        color: widget.alertColor
+                    )),
+              )
+          ],
+        ),
     );
-
-
-  
 }
