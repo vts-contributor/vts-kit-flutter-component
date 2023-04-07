@@ -44,6 +44,7 @@ export 'package:vts_component/components/base/field_control/typings.dart';
 export 'package:vts_component/components/button/index.dart';
 export 'package:vts_component/components/card/index.dart';
 export 'package:vts_component/components/carousel/index.dart';
+export 'package:vts_component/components/charts/pie_chart/index.dart';
 export 'package:vts_component/components/date_time_picker/index.dart';
 export 'package:vts_component/components/dropdown/index.dart';
 export 'package:vts_component/components/image/index.dart';
@@ -56,5 +57,6 @@ export 'package:vts_component/components/textfield/index.dart';
 export 'package:vts_component/components/tile/index.dart';
 export 'package:vts_component/components/toast/index.dart';
 export 'package:vts_component/components/toggle/index.dart';
+
 export 'common/style/vts_color.dart';
 export 'common/style/vts_common.dart';
