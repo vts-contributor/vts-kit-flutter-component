@@ -1,4 +1,4 @@
-import '../../components/line_chart_style_1/axis/axit_chart_data.dart';
+import '../../components/line_chart/axis/axit_chart_data.dart';
 
 extension SideTitlesExtension on AxisTitles {
   double get totalReservedSize {

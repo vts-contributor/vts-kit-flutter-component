@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart' hide Image;
 import 'package:vts_component/common/extension/dash_path_ext.dart';
-import 'package:vts_component/components/line_chart_style_1/utils.dart';
+import 'package:vts_component/components/line_chart/utils.dart';
 
 import 'axis/axit_chart_data.dart';
 import 'line_chart/vts_line_chart_data.dart';
