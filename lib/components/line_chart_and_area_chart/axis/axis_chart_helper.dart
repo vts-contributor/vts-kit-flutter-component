@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vts_component/components/line_chart/utils.dart';
+import 'package:vts_component/components/line_chart_and_area_chart/utils.dart';
 
 import 'axit_chart_data.dart';
 

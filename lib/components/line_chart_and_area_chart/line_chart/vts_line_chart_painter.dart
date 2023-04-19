@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:vts_component/common/extension/pain_ext.dart';
 import 'package:vts_component/common/extension/spot_list_ext.dart';
 import 'package:vts_component/common/extension/text_align_ext.dart';
-import 'package:vts_component/components/line_chart/utils.dart';
+import 'package:vts_component/components/line_chart_and_area_chart/utils.dart';
 
 import '../axis/axis_chart_painter.dart';
 import '../axis/axit_chart_data.dart';
@@ -201,7 +201,7 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
       PaintHolder<VTSLineChartData> holder,
       LineChartBarData barData,
       ) {
-    if (!barData.createAreaData.show) {
+    if (!barData.createAreaChart.show) {
       return;
     }
 
@@ -214,69 +214,69 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
       viewSize.height,
     );
 
-    final belowBar = barData.createAreaData;
+    final belowBar = barData.createAreaChart;
     _barAreaPaint.setColorOrGradient(
       belowBar.color,
       belowBar.gradient,
       belowBarLargestRect,
     );
 
-    if (barData.createAreaData.applyCutOffY) {
-      canvasWrapper.saveLayer(
-        Rect.fromLTWH(0, 0, viewSize.width, viewSize.height),
-        Paint(),
-      );
-    }
+    // if (barData.createAreaChart.applyCutOffY) {
+    //   canvasWrapper.saveLayer(
+    //     Rect.fromLTWH(0, 0, viewSize.width, viewSize.height),
+    //     Paint(),
+    //   );
+    // }
 
     canvasWrapper.drawPath(belowBarPath, _barAreaPaint);
 
     // clear the above area that get out of the bar line
-    if (barData.createAreaData.applyCutOffY) {
-      canvasWrapper
-        ..drawPath(filledAboveBarPath, _clearBarAreaPaint)
-        ..restore();
-    }
+    // if (barData.createAreaChart.applyCutOffY) {
+    //   canvasWrapper
+    //     ..drawPath(filledAboveBarPath, _clearBarAreaPaint)
+    //     ..restore();
+    // }
 
-    /// draw below spots line
-    if (barData.createAreaData.spotsLine.show) {
-      for (final spot in barData.spots) {
-        if (barData.createAreaData.spotsLine.checkToShowSpotLine(spot)) {
-          final from = Offset(
-            getPixelX(spot.x, viewSize, holder),
-            getPixelY(spot.y, viewSize, holder),
-          );
-
-          Offset to;
-
-          // Check applyCutOffY
-          if (barData.createAreaData.spotsLine.applyCutOffY &&
-              barData.createAreaData.applyCutOffY) {
-            to = Offset(
-              getPixelX(spot.x, viewSize, holder),
-              getPixelY(barData.createAreaData.cutOffY, viewSize, holder),
-            );
-          } else {
-            to = Offset(
-              getPixelX(spot.x, viewSize, holder),
-              viewSize.height,
-            );
-          }
-
-          _barAreaLinesPaint
-            ..color = barData.createAreaData.spotsLine.flLineStyle.color
-            ..strokeWidth =
-                barData.createAreaData.spotsLine.flLineStyle.strokeWidth
-            ..transparentIfWidthIsZero();
-
-          canvasWrapper.drawDashedLine(
-            from,
-            to,
-            _barAreaLinesPaint,
-            barData.createAreaData.spotsLine.flLineStyle.dashArray,
-          );
-        }
-      }
-    }
+    // /// draw below spots line
+    // if (barData.createAreaChart.spotsLine.show) {
+    //   for (final spot in barData.spots) {
+    //     if (barData.createAreaChart.spotsLine.checkToShowSpotLine(spot)) {
+    //       final from = Offset(
+    //         getPixelX(spot.x, viewSize, holder),
+    //         getPixelY(spot.y, viewSize, holder),
+    //       );
+    //
+    //       Offset to;
+    //
+    //       // Check applyCutOffY
+    //       if (barData.createAreaChart.spotsLine.applyCutOffY &&
+    //           barData.createAreaChart.applyCutOffY) {
+    //         to = Offset(
+    //           getPixelX(spot.x, viewSize, holder),
+    //           getPixelY(barData.createAreaChart.cutOffY, viewSize, holder),
+    //         );
+    //       } else {
+    //         to = Offset(
+    //           getPixelX(spot.x, viewSize, holder),
+    //           viewSize.height,
+    //         );
+    //       }
+    //
+    //       _barAreaLinesPaint
+    //         ..color = barData.createAreaChart.spotsLine.vtsLineStyle.color
+    //         ..strokeWidth =
+    //             barData.createAreaChart.spotsLine.vtsLineStyle.strokeWidth
+    //         ..transparentIfWidthIsZero();
+    //
+    //       canvasWrapper.drawDashedLine(
+    //         from,
+    //         to,
+    //         _barAreaLinesPaint,
+    //         barData.createAreaChart.spotsLine.vtsLineStyle.dashArray,
+    //       );
+    //     }
+    //   }
+    // }
   }
 
   @visibleForTesting
@@ -874,20 +874,24 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
     /// Line To Bottom Right
     var x = getPixelX(barSpots[barSpots.length - 1].x, viewSize, holder);
     double y;
-    if (!fillCompletely && barData.createAreaData.applyCutOffY) {
-      y = getPixelY(barData.createAreaData.cutOffY, viewSize, holder);
-    } else {
-      y = viewSize.height;
-    }
+    // if (!fillCompletely && barData.createAreaChart.applyCutOffY) {
+    //   y = getPixelY(barData.createAreaChart.cutOffY, viewSize, holder);
+    // } else {
+    //   y = viewSize.height;
+    // }
+    y = viewSize.height;
+
     belowBarPath.lineTo(x, y);
 
     /// Line To Bottom Left
     x = getPixelX(barSpots[0].x, viewSize, holder);
-    if (!fillCompletely && barData.createAreaData.applyCutOffY) {
-      y = getPixelY(barData.createAreaData.cutOffY, viewSize, holder);
-    } else {
-      y = viewSize.height;
-    }
+    // if (!fillCompletely && barData.createAreaChart.applyCutOffY) {
+    //   y = getPixelY(barData.createAreaChart.cutOffY, viewSize, holder);
+    // } else {
+    //   y = viewSize.height;
+    // }
+    y = viewSize.height;
+
     belowBarPath.lineTo(x, y);
 
     /// Line To Top Left
