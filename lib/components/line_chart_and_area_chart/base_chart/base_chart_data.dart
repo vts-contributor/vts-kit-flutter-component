@@ -1,9 +1,10 @@
 import 'dart:core';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:vts_component/common/extension/border_ext.dart';
-import 'vts_touch_event.dart';
+import 'package:vts_component/components/line_chart_and_area_chart/base_chart/vts_touch_event.dart';
+
 
 abstract class BaseChartData with EquatableMixin {
   BaseChartData({

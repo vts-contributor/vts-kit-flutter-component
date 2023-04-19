@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vts_component/common/extension/title_data_ext.dart';
-import 'package:vts_component/components/line_chart/axis/sidetitle/side_title_widget.dart';
+import 'package:vts_component/components/line_chart_and_area_chart/axis/sidetitle/side_title_widget.dart';
 
 import 'axit_chart_data.dart';
 

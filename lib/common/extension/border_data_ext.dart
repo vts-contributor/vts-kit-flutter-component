@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../components/line_chart/base_chart/base_chart_data.dart';
+import '../../components/line_chart_and_area_chart/base_chart/base_chart_data.dart';
 
 extension VTSBorderDataExtension on VTSBorderData {
   EdgeInsets get allSidesPadding => EdgeInsets.only(
