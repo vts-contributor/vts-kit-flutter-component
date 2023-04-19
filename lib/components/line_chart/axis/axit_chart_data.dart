@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart' hide Image;
-import 'package:vts_component/components/line_chart_style_1/base_chart/base_chart_data.dart';
-import 'package:vts_component/components/line_chart_style_1/line_chart/vts_line_chart_data.dart';
+import 'package:vts_component/components/line_chart/base_chart/base_chart_data.dart';
+import 'package:vts_component/components/line_chart/line_chart/vts_line_chart_data.dart';
 
 import '../lerp.dart';
 import 'axis_chart_widgets.dart';

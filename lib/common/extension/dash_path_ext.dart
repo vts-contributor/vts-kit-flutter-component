@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../components/line_chart_style_1/dash_path.dart';
+import '../../components/line_chart/dash_path.dart';
 
 /// Defines extensions on the [Path]
 extension DashedPath on Path {
