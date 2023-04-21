@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:vts_component/common/extension/border_data_ext.dart';
 import 'package:vts_component/common/extension/edge_insets_ext.dart';
 import 'package:vts_component/common/extension/title_data_ext.dart';
-import 'package:vts_component/components/line_chart_style_1/axis/sidetitle/side_title_flex.dart';
-import 'package:vts_component/components/line_chart_style_1/utils.dart';
+import 'package:vts_component/components/line_chart_and_area_chart/axis/sidetitle/side_title_flex.dart';
 
+import '../../utils.dart';
 import '../axis_chart_helper.dart';
 import '../axit_chart_data.dart';
+
 
 class SideTitlesWidget extends StatelessWidget  {
   const SideTitlesWidget({

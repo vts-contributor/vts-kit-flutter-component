@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:vts_component/common/extension/color_ext.dart';
 import 'package:vts_component/common/extension/gradient_ext.dart';
+import '../area_chart/vts_area_chart.dart';
 import '../axis/axit_chart_data.dart';
 import '../base_chart/base_chart_data.dart';
 import '../lerp.dart';
@@ -127,12 +128,14 @@ class LineChartBarData with EquatableMixin {
     List<VTSSpot>? spots,
     bool? show,
     Color? color,
+    BarAreaData? createAreaChart,
     this.gradient,
     double? barWidth,
     VTSDotData? dotData,
     List<int>? showingIndicators,
   })  : spots = spots ?? const [],
         show = show ?? true,
+        createAreaChart = createAreaChart ?? BarAreaData(),
         color =
             color ?? ((color == null && gradient == null) ? Colors.cyan : null),
         barWidth = barWidth ?? 2.0,
@@ -201,12 +204,14 @@ class LineChartBarData with EquatableMixin {
   /// If provided, this [LineChartBarData] draws with this [color]
   final Color? color;
 
+  /// Fills the space blow the line, using a color or gradient.
+  final BarAreaData createAreaChart;
+
   /// If provided, this [LineChartBarData] draws with this [gradient].
   final Gradient? gradient;
 
   /// Determines thickness of drawing line.
   final double barWidth;
-
 
   /// Responsible to showing [spots] on the line as a circular point.
   final VTSDotData dotData;
@@ -226,6 +231,7 @@ class LineChartBarData with EquatableMixin {
   ) => LineChartBarData(
       show: b.show,
       barWidth: lerpDouble(a.barWidth, b.barWidth, t),
+      createAreaChart: BarAreaData.lerp(a.createAreaChart, b.createAreaChart, t),
       dotData: VTSDotData.lerp(a.dotData, b.dotData, t),
       color: Color.lerp(a.color, b.color, t),
       gradient: Gradient.lerp(a.gradient, b.gradient, t),
@@ -237,6 +243,7 @@ class LineChartBarData with EquatableMixin {
   LineChartBarData copyWith({
     List<VTSSpot>? spots,
     bool? show,
+    BarAreaData? createAreaChart,
     Color? color,
     Gradient? gradient,
     double? barWidth,
@@ -247,6 +254,7 @@ class LineChartBarData with EquatableMixin {
       spots: spots ?? this.spots,
       show: show ?? this.show,
       color: color ?? this.color,
+      createAreaChart: createAreaChart ?? this.createAreaChart,
       gradient: gradient ?? this.gradient,
       barWidth: barWidth ?? this.barWidth,
       dotData: dotData ?? this.dotData,
@@ -260,6 +268,7 @@ class LineChartBarData with EquatableMixin {
         color,
         gradient,
         barWidth,
+        createAreaChart,
         dotData,
         showingIndicators,
         shadow,

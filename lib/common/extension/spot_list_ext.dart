@@ -1,4 +1,4 @@
-import '../../components/line_chart_style_1/axis/axit_chart_data.dart';
+import '../../components/line_chart_and_area_chart/axis/axit_chart_data.dart';
 
 extension VTSSpotListExtension on List<VTSSpot> {
   /// Splits a line by [VTSSpot.nullSpot] values inside it.

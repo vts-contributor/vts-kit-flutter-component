@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:vts_component/common/extension/pain_ext.dart';
 import 'package:vts_component/common/extension/spot_list_ext.dart';
 import 'package:vts_component/common/extension/text_align_ext.dart';
-import 'package:vts_component/components/line_chart_style_1/utils.dart';
+import 'package:vts_component/components/line_chart_and_area_chart/utils.dart';
 
 import '../axis/axis_chart_painter.dart';
 import '../axis/axit_chart_data.dart';
@@ -18,10 +18,20 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
   VTSLineChartPainter() : super() {
     _barPaint = Paint()..style = PaintingStyle.stroke;
 
+    _barAreaPaint = Paint()..style = PaintingStyle.fill;
+
+    _clearBarAreaPaint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = const Color(0x00000000)
+      ..blendMode = BlendMode.dstIn;
 
     _touchLinePaint = Paint()
       ..style = PaintingStyle.stroke
       ..color = Colors.black;
+
+    _barAreaLinesPaint = Paint()..style = PaintingStyle.stroke;
+
+
 
     _bgTouchTooltipPaint = Paint()
       ..style = PaintingStyle.fill
@@ -33,6 +43,9 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
       ..strokeWidth = 1.0;
   }
   late Paint _barPaint;
+  late Paint _barAreaPaint;
+  late Paint _clearBarAreaPaint;
+  late Paint _barAreaLinesPaint;
   late Paint _touchLinePaint;
   late Paint _bgTouchTooltipPaint;
   late Paint _borderTouchTooltipPaint;
@@ -177,17 +190,131 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
     canvasWrapper.clipRect(Rect.fromLTRB(left, top, right, bottom));
   }
 
+  /// firstly we draw [belowBarPath], then if cutOffY value is provided in [BarAreaData],
+  /// [belowBarPath] maybe draw over the main bar line,
+  /// then to fix the problem we use [filledAboveBarPath] to clear the above section from this draw.
+  @visibleForTesting
+  void drawBelowBar(
+      CanvasWrapper canvasWrapper,
+      Path belowBarPath,
+      Path filledAboveBarPath,
+      PaintHolder<VTSLineChartData> holder,
+      LineChartBarData barData,
+      ) {
+    if (!barData.createAreaChart.show) {
+      return;
+    }
+
+    final viewSize = canvasWrapper.size;
+
+    final belowBarLargestRect = Rect.fromLTRB(
+      getPixelX(barData.mostLeftSpot.x, viewSize, holder),
+      getPixelY(barData.mostTopSpot.y, viewSize, holder),
+      getPixelX(barData.mostRightSpot.x, viewSize, holder),
+      viewSize.height,
+    );
+
+    final belowBar = barData.createAreaChart;
+    _barAreaPaint.setColorOrGradient(
+      belowBar.color,
+      belowBar.gradient,
+      belowBarLargestRect,
+    );
+
+    // if (barData.createAreaChart.applyCutOffY) {
+    //   canvasWrapper.saveLayer(
+    //     Rect.fromLTWH(0, 0, viewSize.width, viewSize.height),
+    //     Paint(),
+    //   );
+    // }
+
+    canvasWrapper.drawPath(belowBarPath, _barAreaPaint);
+
+    // clear the above area that get out of the bar line
+    // if (barData.createAreaChart.applyCutOffY) {
+    //   canvasWrapper
+    //     ..drawPath(filledAboveBarPath, _clearBarAreaPaint)
+    //     ..restore();
+    // }
+
+    // /// draw below spots line
+    // if (barData.createAreaChart.spotsLine.show) {
+    //   for (final spot in barData.spots) {
+    //     if (barData.createAreaChart.spotsLine.checkToShowSpotLine(spot)) {
+    //       final from = Offset(
+    //         getPixelX(spot.x, viewSize, holder),
+    //         getPixelY(spot.y, viewSize, holder),
+    //       );
+    //
+    //       Offset to;
+    //
+    //       // Check applyCutOffY
+    //       if (barData.createAreaChart.spotsLine.applyCutOffY &&
+    //           barData.createAreaChart.applyCutOffY) {
+    //         to = Offset(
+    //           getPixelX(spot.x, viewSize, holder),
+    //           getPixelY(barData.createAreaChart.cutOffY, viewSize, holder),
+    //         );
+    //       } else {
+    //         to = Offset(
+    //           getPixelX(spot.x, viewSize, holder),
+    //           viewSize.height,
+    //         );
+    //       }
+    //
+    //       _barAreaLinesPaint
+    //         ..color = barData.createAreaChart.spotsLine.vtsLineStyle.color
+    //         ..strokeWidth =
+    //             barData.createAreaChart.spotsLine.vtsLineStyle.strokeWidth
+    //         ..transparentIfWidthIsZero();
+    //
+    //       canvasWrapper.drawDashedLine(
+    //         from,
+    //         to,
+    //         _barAreaLinesPaint,
+    //         barData.createAreaChart.spotsLine.vtsLineStyle.dashArray,
+    //       );
+    //     }
+    //   }
+    // }
+  }
+
   @visibleForTesting
   void drawBarLine(
-    CanvasWrapper canvasWrapper,
-    LineChartBarData barData,
-    PaintHolder<VTSLineChartData> holder,
-  ) {
+      CanvasWrapper canvasWrapper,
+      LineChartBarData barData,
+      PaintHolder<VTSLineChartData> holder,
+      ) {
     final viewSize = canvasWrapper.size;
     final barList = barData.spots.splitByNullSpots();
 
+    // paint each sublist that was built above
+    // bar is passed in separately from barData
+    // because barData is the whole line
+    // and bar is a piece of that line
     for (final bar in barList) {
       final barPath = generateBarPath(viewSize, barData, bar, holder);
+
+      final belowBarPath =
+      generateBelowBarPath(viewSize, barData, barPath, bar, holder);
+      final completelyFillBelowBarPath = generateBelowBarPath(
+        viewSize,
+        barData,
+        barPath,
+        bar,
+        holder,
+        fillCompletely: true,
+      );
+
+
+      drawBelowBar(
+        canvasWrapper,
+        belowBarPath,
+        completelyFillBelowBarPath,
+        holder,
+        barData,
+      );
+
       drawBarShadow(canvasWrapper, barPath, barData);
       drawBar(canvasWrapper, barPath, barData, holder);
     }
@@ -727,6 +854,54 @@ class VTSLineChartPainter extends AxisChartPainter<VTSLineChartData> {
     touchedSpots.sort((a, b) => a.distance.compareTo(b.distance));
 
     return touchedSpots.isEmpty ? null : touchedSpots;
+  }
+
+  /// it generates below area path using a copy of [barPath],
+  /// if cutOffY is provided by the [BarAreaData], it cut the area to the provided cutOffY value,
+  /// if [fillCompletely] is true, the cutOffY will be ignored,
+  /// and a completely filled path will return,
+  @visibleForTesting
+  Path generateBelowBarPath(
+      Size viewSize,
+      LineChartBarData barData,
+      Path barPath,
+      List<VTSSpot> barSpots,
+      PaintHolder<VTSLineChartData> holder, {
+        bool fillCompletely = false,
+      }) {
+    final belowBarPath = Path.from(barPath);
+
+    /// Line To Bottom Right
+    var x = getPixelX(barSpots[barSpots.length - 1].x, viewSize, holder);
+    double y;
+    // if (!fillCompletely && barData.createAreaChart.applyCutOffY) {
+    //   y = getPixelY(barData.createAreaChart.cutOffY, viewSize, holder);
+    // } else {
+    //   y = viewSize.height;
+    // }
+    y = viewSize.height;
+
+    belowBarPath.lineTo(x, y);
+
+    /// Line To Bottom Left
+    x = getPixelX(barSpots[0].x, viewSize, holder);
+    // if (!fillCompletely && barData.createAreaChart.applyCutOffY) {
+    //   y = getPixelY(barData.createAreaChart.cutOffY, viewSize, holder);
+    // } else {
+    //   y = viewSize.height;
+    // }
+    y = viewSize.height;
+
+    belowBarPath.lineTo(x, y);
+
+    /// Line To Top Left
+    x = getPixelX(barSpots[0].x, viewSize, holder);
+    y = getPixelY(barSpots[0].y, viewSize, holder);
+    belowBarPath
+      ..lineTo(x, y)
+      ..close();
+
+    return belowBarPath;
   }
 
   @visibleForTesting
