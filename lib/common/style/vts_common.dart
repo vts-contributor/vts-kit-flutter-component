@@ -15,6 +15,19 @@ class VTSCommon {
   static const Color PLACEHOLDER_FONT_COLOR = VTSColors.GRAY_3;
   static const Duration ANIMATION_NORMAL_DURATION = Duration(milliseconds: 200);
 
+  /// [VTSCommon.SMALL] is used for small size widget
+  static const double SMALL = 20;
+  /// Default size if [VTSCommon.MEDIUM] is used for medium size widget
+  static const double MEDIUM = 25;
+  /// [VTSCommon.LARGE] is used for large size widget
+  static const double LARGE = 30;
+
+  static const double billion = 1000000000;
+
+  static const double million = 1000000;
+
+  static const double kilo = 1000;
+
   // Base color
   static const Color BOX_SHADOW_COLOR = Color.fromRGBO(0, 0, 0, 0.15);
   static const Color SPLASH_COLOR = Color.fromRGBO(0, 0, 0, 0.15);
