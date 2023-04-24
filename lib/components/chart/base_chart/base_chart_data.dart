@@ -3,7 +3,7 @@ import 'dart:core';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:vts_component/common/extension/border_ext.dart';
-import 'package:vts_component/components/line_chart_and_area_chart/base_chart/vts_touch_event.dart';
+import 'package:vts_component/components/chart/base_chart/vts_touch_event.dart';
 
 
 abstract class BaseChartData with EquatableMixin {
@@ -15,7 +15,7 @@ abstract class BaseChartData with EquatableMixin {
   /// Holds data to drawing border around the chart.
   VTSBorderData borderData;
 
-  FlTouchData touchData;
+  VTSTouchData touchData;
 
   BaseChartData lerp(BaseChartData a, BaseChartData b, double t);
 
@@ -60,8 +60,8 @@ class VTSBorderData with EquatableMixin {
   ];
 }
 
-abstract class FlTouchData<R extends BaseTouchResponse> with EquatableMixin {
-  FlTouchData(
+abstract class VTSTouchData<R extends BaseTouchResponse> with EquatableMixin {
+  VTSTouchData(
       this.enabled,
       this.touchCallback,
       );
@@ -78,23 +78,23 @@ abstract class FlTouchData<R extends BaseTouchResponse> with EquatableMixin {
   ];
 }
 
-class FlClipData with EquatableMixin {
-  FlClipData({
+class VTSClipData with EquatableMixin {
+  VTSClipData({
     required this.top,
     required this.bottom,
     required this.left,
     required this.right,
   });
 
-  FlClipData.all() : this(top: true, bottom: true, left: true, right: true);
+  VTSClipData.all() : this(top: true, bottom: true, left: true, right: true);
 
-  FlClipData.vertical()
+  VTSClipData.vertical()
       : this(top: true, bottom: true, left: false, right: false);
 
-  FlClipData.horizontal()
+  VTSClipData.horizontal()
       : this(top: false, bottom: false, left: true, right: true);
 
-  FlClipData.none()
+  VTSClipData.none()
       : this(top: false, bottom: false, left: false, right: false);
   final bool top;
   final bool bottom;
@@ -103,12 +103,12 @@ class FlClipData with EquatableMixin {
 
   bool get any => top || bottom || left || right;
 
-  FlClipData copyWith({
+  VTSClipData copyWith({
     bool? top,
     bool? bottom,
     bool? left,
     bool? right,
-  }) => FlClipData(
+  }) => VTSClipData(
       top: top ?? this.top,
       bottom: bottom ?? this.bottom,
       left: left ?? this.left,

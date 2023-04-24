@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vts_component/common/extension/pain_ext.dart';
-import 'package:vts_component/components/line_chart_and_area_chart/utils.dart';
+import 'package:vts_component/components/chart/utils.dart';
 
 import '../base_chart/base_chart_data.dart';
 import '../base_chart/base_chart_painter.dart';

@@ -79,6 +79,74 @@ class Utils {
     return _roundIntervalAboveOne(input) / pow10onPrecision;
   }
 
+  /// Default value for BorderSide where borderSide value is not exists
+  static const BorderSide defaultBorderSide = BorderSide(width: 0);
+
+  /// Decreases [borderSide] to <= width / 2
+  BorderSide normalizeBorderSide(BorderSide? borderSide, double width) {
+    if (borderSide == null) {
+      return defaultBorderSide;
+    }
+
+    double borderWidth;
+    if (borderSide.width > width / 2) {
+      borderWidth = width / 2.toDouble();
+    } else {
+      borderWidth = borderSide.width;
+    }
+
+    return borderSide.copyWith(width: borderWidth);
+  }
+
+  /// Decreases [borderRadius] to <= width / 2
+  BorderRadius? normalizeBorderRadius(
+      BorderRadius? borderRadius,
+      double width,
+      ) {
+    if (borderRadius == null) {
+      return null;
+    }
+
+    Radius topLeft;
+    if (borderRadius.topLeft.x > width / 2 ||
+        borderRadius.topLeft.y > width / 2) {
+      topLeft = Radius.circular(width / 2);
+    } else {
+      topLeft = borderRadius.topLeft;
+    }
+
+    Radius topRight;
+    if (borderRadius.topRight.x > width / 2 ||
+        borderRadius.topRight.y > width / 2) {
+      topRight = Radius.circular(width / 2);
+    } else {
+      topRight = borderRadius.topRight;
+    }
+
+    Radius bottomLeft;
+    if (borderRadius.bottomLeft.x > width / 2 ||
+        borderRadius.bottomLeft.y > width / 2) {
+      bottomLeft = Radius.circular(width / 2);
+    } else {
+      bottomLeft = borderRadius.bottomLeft;
+    }
+
+    Radius bottomRight;
+    if (borderRadius.bottomRight.x > width / 2 ||
+        borderRadius.bottomRight.y > width / 2) {
+      bottomRight = Radius.circular(width / 2);
+    } else {
+      bottomRight = borderRadius.bottomRight;
+    }
+
+    return BorderRadius.only(
+      topLeft: topLeft,
+      topRight: topRight,
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
+    );
+  }
+
   double _roundIntervalAboveOne(double input) {
     assert(input >= 1.0);
     final decimalCount = input.toInt().toString().length - 1;

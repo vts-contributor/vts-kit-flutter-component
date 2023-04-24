@@ -474,7 +474,7 @@ abstract class VTSLineLabel with EquatableMixin {
       ];
 }
 
-class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
+class LineTouchData extends VTSTouchData<LineTouchResponse> with EquatableMixin {
   LineTouchData({
     bool? enabled,
     BaseTouchCallback<LineTouchResponse>? touchCallback,

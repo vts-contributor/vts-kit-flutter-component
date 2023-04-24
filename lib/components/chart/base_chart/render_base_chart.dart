@@ -8,7 +8,7 @@ import 'vts_touch_event.dart';
 
 abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
     implements MouseTrackerAnnotation {
-  RenderBaseChart(FlTouchData<R>? touchData, BuildContext context)
+  RenderBaseChart(VTSTouchData<R>? touchData, BuildContext context)
       : _buildContext = context {
     updateBaseTouchData(touchData);
     initGestureRecognizers();
@@ -21,7 +21,7 @@ abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
     markNeedsPaint();
   }
 
-  void updateBaseTouchData(FlTouchData<R>? value) {
+  void updateBaseTouchData(VTSTouchData<R>? value) {
     _touchCallback = value?.touchCallback;
   }
 

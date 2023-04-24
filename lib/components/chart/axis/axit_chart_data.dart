@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart' hide Image;
-import 'package:vts_component/components/line_chart_and_area_chart/base_chart/base_chart_data.dart';
-import 'package:vts_component/components/line_chart_and_area_chart/line_chart/vts_line_chart_data.dart';
+import 'package:vts_component/components/chart/base_chart/base_chart_data.dart';
+import 'package:vts_component/components/chart/line_chart/vts_line_chart_data.dart';
 
 import '../lerp.dart';
 import 'axis_chart_widgets.dart';
@@ -39,7 +39,7 @@ abstract class AxisChartData extends BaseChartData with EquatableMixin {
   double baselineY;
 
   /// clip the chart to the border (prevent draw outside the border)
-  FlClipData clipData = FlClipData.none();
+  VTSClipData clipData = VTSClipData.none();
 
   /// A background color which is drawn behind the chart.
   Color backgroundColor;

@@ -1,8 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart' hide Image;
 import 'package:vts_component/common/extension/dash_path_ext.dart';
-import 'package:vts_component/components/line_chart_and_area_chart/utils.dart';
-
+import 'package:vts_component/components/chart/utils.dart';
 import 'axis/axit_chart_data.dart';
 import 'line_chart/vts_line_chart_data.dart';
 
@@ -43,7 +42,6 @@ class CanvasWrapper {
       canvas.drawImage(image, offset, paint);
 
   void drawRect(Rect rect, Paint paint) => canvas.drawRect(rect, paint);
-
 
   void drawText(TextPainter tp, Offset offset, [double? rotateAngle]) {
     if (rotateAngle == null) {

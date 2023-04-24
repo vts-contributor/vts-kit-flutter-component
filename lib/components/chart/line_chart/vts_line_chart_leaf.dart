@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vts_component/components/line_chart_and_area_chart/base_chart/render_base_chart.dart';
+import 'package:vts_component/components/chart/base_chart/render_base_chart.dart';
 
 import '../base_chart/base_chart_painter.dart';
 import '../canvas_wrapper.dart';

@@ -22,12 +22,11 @@ class VTSLineChart extends ImplicitlyAnimatedWidget {
   /// Determines how the [VTSLineChart] should be look like.
   final VTSLineChartData data;
 
-
   @override
-  _LineChartState createState() => _LineChartState();
+  _VTSLineChartState createState() => _VTSLineChartState();
 }
 
-class _LineChartState extends AnimatedWidgetBaseState<VTSLineChart> {
+class _VTSLineChartState extends AnimatedWidgetBaseState<VTSLineChart> {
   LineChartDataTween? _lineChartDataTween;
 
   BaseTouchCallback<LineTouchResponse>? _providedTouchCallback;

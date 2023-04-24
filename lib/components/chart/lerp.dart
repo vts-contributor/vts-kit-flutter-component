@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'axis/axit_chart_data.dart';
+import 'bar_chart/vts_bar_chart_data.dart';
 import 'line_chart/vts_line_chart_data.dart';
 
 @visibleForTesting
@@ -56,6 +57,16 @@ List<VerticalRangeAnnotation>? lerpVerticalRangeAnnotationList(
 ) =>
     lerpList(a, b, t, lerp: VerticalRangeAnnotation.lerp);
 
+/// Lerps [BarChartGroupData] list based on [t] value, check [Tween.lerp].
+List<BarChartGroupData>? lerpBarChartGroupDataList(
+    List<BarChartGroupData>? a,
+    List<BarChartGroupData>? b,
+    double t,
+    ) =>
+    lerpList(a, b, t, lerp: BarChartGroupData.lerp);
+
+
+
 List<LineChartBarData>? lerpLineChartBarDataList(
   List<LineChartBarData>? a,
   List<LineChartBarData>? b,
@@ -63,7 +74,13 @@ List<LineChartBarData>? lerpLineChartBarDataList(
 ) =>
     lerpList(a, b, t, lerp: LineChartBarData.lerp);
 
-
+/// Lerps [BarChartRodData] list based on [t] value, check [Tween.lerp].
+List<BarChartRodData>? lerpBarChartRodDataList(
+    List<BarChartRodData>? a,
+    List<BarChartRodData>? b,
+    double t,
+    ) =>
+    lerpList(a, b, t, lerp: BarChartRodData.lerp);
 
 
 Color lerpGradient(List<Color> colors, List<double> stops, double t) {
